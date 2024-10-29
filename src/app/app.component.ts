@@ -1,11 +1,27 @@
 import { TuiRoot } from '@taiga-ui/core';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {
+    RouterLink,
+    RouterLinkActive,
+    RouterModule,
+    RouterOutlet,
+} from '@angular/router';
+import { TuiTabs } from '@taiga-ui/kit';
 import { AuthorizationFormComponent } from './components/authorization-form/authorization-form.component';
+import { FilmCardsComponent } from './components/film-cards/film-cards.component';
 
 @Component({
     standalone: true,
-    imports: [RouterModule, TuiRoot, AuthorizationFormComponent],
+    imports: [
+        RouterModule,
+        TuiRoot,
+        AuthorizationFormComponent,
+        FilmCardsComponent,
+        RouterOutlet,
+        RouterLink,
+        RouterLinkActive,
+        TuiTabs,
+    ],
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrl: './app.component.less',
