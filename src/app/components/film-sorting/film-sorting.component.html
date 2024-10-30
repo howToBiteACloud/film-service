@@ -1,0 +1,15 @@
+<div>
+    <h3>Жанр:</h3>
+    <tui-multi-select
+        [formControl]="control"
+        [tuiTextfieldLabelOutside]="true"
+        [(search)]="search"
+    >
+        Выберите жанр
+        <tui-data-list-wrapper
+            *tuiDataList
+            tuiMultiSelectGroup
+            [items]="filter(search)"
+        />
+    </tui-multi-select>
+</div>

@@ -1,5 +1,6 @@
 import { TuiRoot } from '@taiga-ui/core';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
     RouterLink,
     RouterLinkActive,
@@ -13,6 +14,7 @@ import { FilmCardsComponent } from './components/film-cards/film-cards.component
 @Component({
     standalone: true,
     imports: [
+        CommonModule,
         RouterModule,
         TuiRoot,
         AuthorizationFormComponent,
