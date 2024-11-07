@@ -1,15 +1,19 @@
+@let genres = genres$ | async;
+
 <div>
-    <h3>Жанр:</h3>
+    <h3>По жанру:</h3>
     <tui-multi-select
         [formControl]="control"
         [tuiTextfieldLabelOutside]="true"
         [(search)]="search"
+        [stringify]="stringify"
     >
         Выберите жанр
         <tui-data-list-wrapper
             *tuiDataList
             tuiMultiSelectGroup
-            [items]="filter(search)"
+            [itemContent]="stringify | tuiStringifyContent"
+            [items]="filter(search, genres || [])"
         />
     </tui-multi-select>
 </div>

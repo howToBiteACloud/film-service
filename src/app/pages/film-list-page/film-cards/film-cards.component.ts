@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TuiAppearance, TuiSurface } from '@taiga-ui/core';
-import { TuiTiles } from '@taiga-ui/kit';
+import { FilmCardComponent } from './film-card/film-card.component';
 
 @Component({
     selector: 'app-film-cards',
     standalone: true,
-    imports: [CommonModule, TuiAppearance, TuiSurface, TuiTiles],
+    imports: [CommonModule, FilmCardComponent],
     templateUrl: './film-cards.component.html',
     styleUrl: './film-cards.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
