@@ -1,10 +1,23 @@
-<app-film-card></app-film-card>
-<app-film-card></app-film-card>
-<app-film-card></app-film-card>
-<app-film-card></app-film-card>
-<app-film-card></app-film-card>
-<app-film-card></app-film-card>
-<app-film-card></app-film-card>
-<app-film-card></app-film-card>
-<app-film-card></app-film-card>
-<app-film-card></app-film-card>
+@let films = films$ | async;
+@let totalPages = totalPages$ | async;
+@let isLoading = isLoading$ | async;
+<!--prettier криво форматирует-->
+
+@if (isLoading) {
+    @for (index of 20 | tuiRepeatTimes; track index) {
+        <div>
+            <div class="skeleton-card" [tuiSkeleton]="true"></div>
+            <div class="skeleton-title" tuiSkeleton="This text serves as the cont">
+        </div>
+    </div>
+    }
+} @else {
+    @for (film of films; track film.id) {
+    <app-film-card [data]="film"></app-film-card>
+    }
+    <tui-pagination
+        [index]="index"
+        [length]="totalPages || 0"
+        (indexChange)="pageChanged($event)"
+    />
+}

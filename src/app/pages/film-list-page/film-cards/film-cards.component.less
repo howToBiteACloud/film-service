@@ -1,10 +1,17 @@
 :host {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 16px;
-    width: 70%;
+}
 
-    @media screen and (max-width: 47.9625em) {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.skeleton-card {
+    width: 140px;
+    height: 210px;
+}
+
+// .skeleton-title {}
+
+tui-pagination ::ng-deep .t-button {
+    inline-size: auto;
+    min-width: var(--tui-height-s);
 }

@@ -5,30 +5,6 @@ export interface AuthorizationData {
     password: string;
 }
 
-export interface FilmData {
-    id: string;
-    name: string;
-    date: string;
-    rating: number;
-    actors: Actor[];
-    synopsis: string;
-    poster: string;
-}
-
-export interface FilmDataEnriched extends FilmData {
-    evaluate: number;
-    watched: boolean;
-    willWatch: boolean;
-}
-
-export interface FiltersData {
-    genres: string[];
-    dates: string[];
-    rating: number[];
-    willWatch: boolean;
-    watched: boolean;
-}
-
 export interface Actor {
     id: string;
     fullname: string;

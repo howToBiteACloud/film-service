@@ -61,26 +61,20 @@ function minLengthValidator(minLength: number): ValidatorFn {
     styleUrl: './authorization-form.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthorizationFormComponent implements OnInit {
+export class AuthorizationFormComponent {
     private readonly formBuilder = inject(FormBuilder);
 
-    array = [Validators.required, Validators.minLength(4)];
+    readonly array = [Validators.required, Validators.minLength(4)];
 
     authorizationForm: FormGroup = this.formBuilder.group({
         username: ['', [requiredValidator, minLengthValidator(4)]],
         password: ['', [requiredValidator, minLengthValidator(5)]],
     });
 
-    ngOnInit() {
-        console.log(this.authorizationForm);
-    }
-
     onSubmit() {
         if (this.authorizationForm.invalid) {
             tuiMarkControlAsTouchedAndValidate(this.authorizationForm);
             return;
         }
-
-        console.log('succes');
     }
 }

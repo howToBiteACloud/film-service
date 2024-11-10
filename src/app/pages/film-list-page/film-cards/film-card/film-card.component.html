@@ -1,1 +1,10 @@
-<div tuiSurface class="overlay film-card">film-card</div>
+<div class="film-card">
+    <img
+        class="poster"
+        [src]="'https://image.tmdb.org/t/p/w500/' + data.poster_path"
+        [alt]="data.title"
+    />
+</div>
+<div class="film-title">
+    {{ data.title }}
+</div>
