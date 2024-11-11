@@ -1,10 +1,15 @@
-<div class="film-card">
+<div class="film-card" [tuiSkeleton]="isLoading">
     <img
         class="poster"
         [src]="'https://image.tmdb.org/t/p/w500/' + data.poster_path"
+        (load)="onLoad()"
+        (error)="onError()"
         [alt]="data.title"
     />
 </div>
-<div class="film-title">
-    {{ data.title }}
-</div>
+
+<tui-line-clamp
+    [content]="data.title"
+    [lineHeight]="20"
+    [linesLimit]="2"
+/>

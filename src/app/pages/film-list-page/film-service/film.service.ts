@@ -29,9 +29,7 @@ export class FilmService implements OnDestroy {
     private readonly destroy$ = new Subject<void>();
 
     private readonly currentPage$ = new BehaviorSubject<number>(1);
-    private readonly currentControls$ = new BehaviorSubject<FilmListFilters>(
-        {}
-    );
+    private readonly currentFilters$ = new BehaviorSubject<FilmListFilters>({});
 
     private readonly state$ = new BehaviorSubject<State>({
         status: RequestStatus.None,
@@ -49,9 +47,9 @@ export class FilmService implements OnDestroy {
 
     readonly genres$ = this.tmdbApiService.getGenres();
 
-    totalPages$ = this.state$.pipe(map((state) => state.value?.total_pages));
-
-    params = {};
+    readonly totalPages$ = this.state$.pipe(
+        map((state) => state.value?.total_pages)
+    );
 
     constructor() {
         this.loadFilmsEffect();
@@ -67,14 +65,16 @@ export class FilmService implements OnDestroy {
     }
 
     controlsChange(controls: FilmListFilters) {
-        this.currentControls$.next(controls);
+        this.currentFilters$.next(controls);
     }
 
     private loadFilmsEffect() {
-        combineLatest({
+        const params$ = combineLatest({
             page: this.currentPage$,
-            filters: this.currentControls$,
-        })
+            filters: this.currentFilters$,
+        }).pipe(map(({ page, filters }) => makeFilmParams(page, filters)));
+
+        params$
             .pipe(
                 tap(() => {
                     this.state$.next({
@@ -83,23 +83,7 @@ export class FilmService implements OnDestroy {
                         error: null,
                     });
                 }),
-                switchMap(({ page, filters }) => {
-                    const with_genres = filters.genres
-                        ? filters.genres
-                              .map((genre: Genre) => genre.id)
-                              .join(',')
-                        : null;
-                    const primary_release_year = filters.dates;
-
-                    const params: DiscoverMovieParams = {
-                        ...(with_genres ? { with_genres } : {}),
-                        ...(primary_release_year
-                            ? { primary_release_year }
-                            : {}),
-                    };
-
-                    return this.tmdbApiService.getFilms(page, params);
-                }),
+                switchMap((params) => this.tmdbApiService.getFilms(params)),
                 catchError((error) => {
                     this.state$.next({
                         status: RequestStatus.Fail,
@@ -119,4 +103,19 @@ export class FilmService implements OnDestroy {
                 });
             });
     }
+}
+
+function makeFilmParams(page: number, filters: FilmListFilters) {
+    const with_genres = filters.genres
+        ? filters.genres.map((genre: Genre) => genre.id).join(',')
+        : null;
+    const primary_release_year = filters.dates;
+
+    const params: DiscoverMovieParams = {
+        page,
+        ...(with_genres ? { with_genres } : {}),
+        ...(primary_release_year ? { primary_release_year } : {}),
+    };
+
+    return params;
 }

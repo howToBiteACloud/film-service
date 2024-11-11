@@ -1,4 +1,3 @@
-export * from './authorization-data.interface';
 export * from './film-data.type';
 export * from './genre.type';
 export * from './films-response.type';

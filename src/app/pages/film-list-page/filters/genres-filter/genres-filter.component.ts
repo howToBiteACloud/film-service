@@ -36,8 +36,6 @@ export class GenresFilterComponent {
     private readonly filmService = inject(FilmService);
     protected readonly genres$ = this.filmService.genres$;
 
-    // protected readonly control = new FormControl([]);
-
     protected readonly stringify = (item: Genre): string => item.name;
 
     protected search: string | null = '';

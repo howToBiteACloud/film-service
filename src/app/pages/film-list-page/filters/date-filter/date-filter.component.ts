@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
     TuiInputYearModule,
@@ -10,7 +9,6 @@ import {
     selector: 'app-date-filter',
     standalone: true,
     imports: [
-        CommonModule,
         ReactiveFormsModule,
         TuiInputYearModule,
         TuiTextfieldControllerModule,
@@ -20,7 +18,5 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateFilterComponent {
-    // protected readonly control = new FormControl<number | null>(null);
-
     @Input() control!: FormControl;
 }
