@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FilmCardsComponent } from './film-cards/film-cards.component';
 import { FiltersComponent } from './filters/filters.component';
