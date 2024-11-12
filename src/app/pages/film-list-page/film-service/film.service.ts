@@ -43,13 +43,13 @@ export class FilmService implements OnDestroy {
         map((state) => state.value?.total_pages)
     );
 
-    constructor() {
-        this.loadFilmsEffect();
-    }
-
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    initialize() {
+        this.loadFilmsEffect();
     }
 
     pageChange(pageNumber: number) {
@@ -61,13 +61,12 @@ export class FilmService implements OnDestroy {
     }
 
     private loadFilmsEffect() {
-        const params$ = combineLatest({
+        combineLatest({
             page: this.currentPage$,
             filters: this.currentFilters$,
-        }).pipe(map(({ page, filters }) => makeFilmParams(page, filters)));
-
-        params$
+        })
             .pipe(
+                map(({ page, filters }) => makeFilmParams(page, filters)),
                 tap(() => {
                     this.state$.next(loadingRequest());
                 }),

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Genre } from '../../../models';
 import { FilmService } from '../film-service/film.service';
@@ -13,8 +18,8 @@ import { DateFilterComponent } from './date-filter/date-filter.component';
     styleUrl: './filters.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FiltersComponent {
-    private readonly filmservice = inject(FilmService);
+export class FiltersComponent implements OnInit {
+    private readonly filmService = inject(FilmService);
 
     readonly genresControl = new FormControl<Genre[]>([]);
     readonly datesControl = new FormControl<number | null>(null);
@@ -25,7 +30,7 @@ export class FiltersComponent {
 
     ngOnInit() {
         this.filtersForm.valueChanges.subscribe((value) => {
-            this.filmservice.controlsChange(value);
+            this.filmService.controlsChange(value);
         });
     }
 }

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    OnInit,
+} from '@angular/core';
 import { FilmCardsComponent } from './film-cards/film-cards.component';
 import { FiltersComponent } from './filters/filters.component';
 import { FilmService } from './film-service/film.service';
@@ -12,4 +17,10 @@ import { FilmService } from './film-service/film.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [FilmService],
 })
-export class FilmListPageComponent {}
+export class FilmListPageComponent implements OnInit {
+    private readonly filmService = inject(FilmService);
+
+    ngOnInit() {
+        this.filmService.initialize();
+    }
+}
