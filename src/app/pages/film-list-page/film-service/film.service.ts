@@ -3,24 +3,18 @@ import { catchError, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, NEVER, Subject } from 'rxjs';
 import { TmdbApiService } from '../../../apis/tmdb-api.service';
 import {
-    FilmsResponse,
-    DiscoverMovieParams,
     FilmListFilters,
-    Genre,
+    FilmsResponse,
+    RequestState,
+    RequestStatus,
 } from '../../../models';
-
-enum RequestStatus {
-    None,
-    Loading,
-    Success,
-    Fail,
-}
-
-type State = {
-    status: RequestStatus;
-    value: FilmsResponse | null;
-    error: Error | null;
-};
+import {
+    makeFilmParams,
+    noneRequest,
+    successRequest,
+    loadingRequest,
+    failRequest,
+} from '../helpers';
 
 @Injectable()
 export class FilmService implements OnDestroy {
@@ -31,11 +25,9 @@ export class FilmService implements OnDestroy {
     private readonly currentPage$ = new BehaviorSubject<number>(1);
     private readonly currentFilters$ = new BehaviorSubject<FilmListFilters>({});
 
-    private readonly state$ = new BehaviorSubject<State>({
-        status: RequestStatus.None,
-        value: null,
-        error: null,
-    });
+    private readonly state$ = new BehaviorSubject<RequestState<FilmsResponse>>(
+        noneRequest()
+    );
 
     readonly films$ = this.state$.pipe(
         map((state) => state.value?.results ?? [])
@@ -77,45 +69,18 @@ export class FilmService implements OnDestroy {
         params$
             .pipe(
                 tap(() => {
-                    this.state$.next({
-                        status: RequestStatus.Loading,
-                        value: null,
-                        error: null,
-                    });
+                    this.state$.next(loadingRequest());
                 }),
                 switchMap((params) => this.tmdbApiService.getFilms(params)),
                 catchError((error) => {
-                    this.state$.next({
-                        status: RequestStatus.Fail,
-                        value: null,
-                        error,
-                    });
+                    this.state$.next(failRequest(error));
 
                     return NEVER;
                 }),
                 takeUntil(this.destroy$)
             )
             .subscribe((response) => {
-                this.state$.next({
-                    status: RequestStatus.Success,
-                    value: response,
-                    error: null,
-                });
+                this.state$.next(successRequest(response));
             });
     }
-}
-
-function makeFilmParams(page: number, filters: FilmListFilters) {
-    const with_genres = filters.genres
-        ? filters.genres.map((genre: Genre) => genre.id).join(',')
-        : null;
-    const primary_release_year = filters.dates;
-
-    const params: DiscoverMovieParams = {
-        page,
-        ...(with_genres ? { with_genres } : {}),
-        ...(primary_release_year ? { primary_release_year } : {}),
-    };
-
-    return params;
 }
