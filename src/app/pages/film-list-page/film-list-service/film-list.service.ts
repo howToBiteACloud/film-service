@@ -17,7 +17,7 @@ import {
 } from '../helpers';
 
 @Injectable()
-export class FilmService implements OnDestroy {
+export class FilmListService implements OnDestroy {
     private readonly tmdbApiService = inject(TmdbApiService);
 
     private readonly destroy$ = new Subject<void>();

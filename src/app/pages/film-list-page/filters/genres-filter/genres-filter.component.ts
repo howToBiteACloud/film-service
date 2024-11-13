@@ -14,7 +14,7 @@ import {
 } from '@taiga-ui/legacy';
 import { TUI_DEFAULT_MATCHER, tuiPure } from '@taiga-ui/cdk';
 import { Genre } from '../../../../models';
-import { FilmService } from '../../film-service/film.service';
+import { FilmListService } from '../../film-list-service/film-list.service';
 
 @Component({
     selector: 'app-genres-filter',
@@ -33,8 +33,8 @@ import { FilmService } from '../../film-service/film.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenresFilterComponent {
-    private readonly filmService = inject(FilmService);
-    protected readonly genres$ = this.filmService.genres$;
+    private readonly filmListService = inject(FilmListService);
+    protected readonly genres$ = this.filmListService.genres$;
 
     protected readonly stringify = (item: Genre): string => item.name;
 

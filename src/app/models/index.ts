@@ -5,3 +5,7 @@ export * from './film-list-filters.type';
 export * from './discover-movie-params.type';
 export * from './request-state.type';
 export * from './request-status.enum';
+export * from './production-country.type';
+export * from './production-company.type';
+export * from './credits-response.type';
+export * from './spoken-language.type';

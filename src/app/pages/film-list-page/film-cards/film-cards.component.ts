@@ -4,7 +4,7 @@ import { TuiPagination } from '@taiga-ui/kit';
 import { TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { TuiSkeleton } from '@taiga-ui/kit';
 import { TuiRepeatTimesPipe } from '@taiga-ui/cdk';
-import { FilmService } from '../film-service/film.service';
+import { FilmListService } from '../film-list-service/film-list.service';
 import { FilmCardComponent } from './film-card/film-card.component';
 
 @Component({
@@ -23,15 +23,15 @@ import { FilmCardComponent } from './film-card/film-card.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilmCardsComponent {
-    private readonly filmService = inject(FilmService);
-    readonly films$ = this.filmService.films$;
-    readonly totalPages$ = this.filmService.totalPages$;
-    readonly isLoading$ = this.filmService.isLoading$;
+    private readonly filmListService = inject(FilmListService);
+    readonly films$ = this.filmListService.films$;
+    readonly totalPages$ = this.filmListService.totalPages$;
+    readonly isLoading$ = this.filmListService.isLoading$;
 
     index = 0;
 
     protected pageChanged(index: number): void {
         this.index = index;
-        this.filmService.pageChange(index + 1);
+        this.filmListService.pageChange(index + 1);
     }
 }

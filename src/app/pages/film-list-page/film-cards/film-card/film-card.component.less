@@ -7,23 +7,25 @@
     cursor: pointer;
 
     &:hover {
-        .film-card::after {
+        .poster::after {
             opacity: 1;
         }
     }
 }
 
+.card-wrapper {
+    color: inherit;
+    text-decoration: none;
+}
+
 .poster {
+    position: relative;
     display: block;
     width: 100%;
     height: 210px;
     background-color: var(--tui-background-neutral-1);
     color: transparent;
     user-select: none;
-}
-
-.film-card {
-    position: relative;
 
     &:after {
         position: absolute;
@@ -37,10 +39,4 @@
         opacity: 0;
         transition: opacity 0.15s ease-in-out;
     }
-}
-
-.loader {
-    display: flex;
-    inline-size: fit-content;
-    margin: 1rem 0;
 }

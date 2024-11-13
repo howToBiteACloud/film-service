@@ -1,0 +1,8 @@
+<img
+    class="image"
+    [tuiSkeleton]="isLoading"
+    [alt]="alt"
+    [src]="'https://image.tmdb.org/t/p/w500/' + path"
+    (load)="onLoad()"
+    (error)="onError()"
+/>

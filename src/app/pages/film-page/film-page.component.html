@@ -1,0 +1,13 @@
+@let film = film$ | async;
+
+@if (film) {
+    <div>
+        <app-poster 
+            class="poster"
+            [alt]="film.title"
+            [path]="film.poster_path">
+        </app-poster>
+    </div>
+    <app-film-info [film]="film"></app-film-info>
+    <app-film-actors [actors]="film.credits.cast"></app-film-actors>
+}

@@ -1,0 +1,80 @@
+export type FilmResponse = {
+    adult
+: 
+false
+backdrop_path
+: 
+"/18TSJF1WLA4CkymvVUcKDBwUJ9F.jpg"
+belongs_to_collection
+: 
+{id: 727761, name: 'Ужасающий', poster_path: '/4xIzrMcEvCzJm5qAl92WMHLSIeM.jpg', backdrop_path: '/zREjCmCHIHdEF6ufPoDQjhl4Wdm.jpg'}
+budget
+: 
+2000000
+genres
+: 
+(3) [{…}, {…}, {…}]
+homepage
+: 
+""
+id
+: 
+1034541
+imdb_id
+: 
+"tt27911000"
+origin_country
+: 
+['US']
+original_language
+: 
+"en"
+original_title
+: 
+"Terrifier 3"
+overview
+: 
+"Клоун Арт снова возвращается в округ Майлз, чтобы устроить кровавую бойню в канун Рождества."
+popularity
+: 
+3304.003
+poster_path
+: 
+"/5jbCnDREJeciL3KR7ZWdSotEgzG.jpg"
+production_companies
+: 
+(6) [{…}, {…}, {…}, {…}, {…}, {…}]
+production_countries
+: 
+[{…}]
+release_date
+: 
+"2024-10-09"
+revenue
+: 
+78573405
+runtime
+: 
+125
+spoken_languages
+: 
+[{…}]
+status
+: 
+"Released"
+tagline
+: 
+""
+title
+: 
+"Ужасающий 3"
+video
+: 
+false
+vote_average
+: 
+6.9
+vote_count
+: 
+885
+}

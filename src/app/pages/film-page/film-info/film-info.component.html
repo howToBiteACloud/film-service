@@ -1,0 +1,49 @@
+@let info = info$ | async;
+
+<div class="film-info-wrapper">
+    <div class="tui-text_h3">
+        {{film.title}}
+    </div>
+    @if (info) {
+        <div class="film-info-item">
+            <div class="film-info-title">Страна:</div>
+            <div>{{film.production_countries| tuiMapper : getCountries}}</div>
+        </div>
+        <div class="film-info-item">
+            <div class="film-info-title">Жанры:</div>
+            <div class="film-info-value">
+                @for (genre of film.genres; track genre.id) {
+                    <tui-badge class="tui-space_right-1">{{genre.name}}</tui-badge>
+                }
+            </div>
+        </div>
+        <div class="film-info-item">
+            <div class="film-info-title">Продюссер:</div>
+            <div class="film-info-value">{{info.director}}</div>
+        </div>
+    }
+    <div class="film-info-item">
+        <div class="film-info-title">Год производства:</div>
+        <div class="film-info-value"> {{film.release_date}}</div>
+    </div>
+    <div class="film-info-item">
+        <div class="film-info-title">Оценки:</div>
+        <div class="film-info-value">{{film.vote_average}}</div>
+    </div>
+    <div class="film-info-item">
+        <div class="film-info-title">Бюджет:</div>
+        <div class="film-info-value"> {{ film.budget | tuiAmount | async }}</div>
+    </div>
+    <div class="film-info-item">
+        <div class="film-info-title">Доход:</div>
+        <div class="film-info-value">{{film.revenue}}</div>
+    </div>    
+    <div class="film-info-item">
+        <div class="film-info-title">Продолжительность:</div>
+        <div class="film-info-value">{{film.runtime}}</div>
+    </div>
+    <div class="film-info-item">
+        <div class="film-info-title">????:</div>
+        <div class="film-info-value">что-то ещё?</div>
+    </div>
+</div>

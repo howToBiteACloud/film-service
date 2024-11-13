@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FilmCardsComponent } from './film-cards/film-cards.component';
 import { FiltersComponent } from './filters/filters.component';
-import { FilmService } from './film-service/film.service';
+import { FilmListService } from './film-list-service/film-list.service';
 
 @Component({
     selector: 'app-film-list-page',
@@ -15,12 +15,12 @@ import { FilmService } from './film-service/film.service';
     templateUrl: './film-list-page.component.html',
     styleUrl: './film-list-page.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [FilmService],
+    providers: [FilmListService],
 })
 export class FilmListPageComponent implements OnInit {
-    private readonly filmService = inject(FilmService);
+    private readonly filmListService = inject(FilmListService);
 
     ngOnInit() {
-        this.filmService.initialize();
+        this.filmListService.initialize();
     }
 }

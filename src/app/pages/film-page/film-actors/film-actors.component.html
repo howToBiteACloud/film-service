@@ -1,0 +1,9 @@
+<div class="film-cast">
+    Актёры:
+    <div>
+        @for (actor of actors; track actor.id) {
+            <div>{{actor.name}}</div>
+            <div>{{actor.character}}</div>
+        }
+    </div>
+</div>
