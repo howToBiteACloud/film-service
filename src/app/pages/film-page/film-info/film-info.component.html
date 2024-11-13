@@ -1,27 +1,21 @@
-@let info = info$ | async;
-
 <div class="film-info-wrapper">
-    <div class="tui-text_h3">
-        {{film.title}}
+    <div class="tui-text_h4">{{film.title}}</div>
+    <div class="film-info-item">
+        <div class="film-info-title">Страна:</div>
+        <div>{{film.production_countries | tuiMapper : getCountries}}</div>
     </div>
-    @if (info) {
-        <div class="film-info-item">
-            <div class="film-info-title">Страна:</div>
-            <div>{{film.production_countries| tuiMapper : getCountries}}</div>
+    <div class="film-info-item">
+        <div class="film-info-title">Жанры:</div>
+        <div class="film-info-value">
+            @for (genre of film.genres; track genre.id) {
+                <tui-badge class="tui-space_right-1">{{genre.name}}</tui-badge>
+            }
         </div>
-        <div class="film-info-item">
-            <div class="film-info-title">Жанры:</div>
-            <div class="film-info-value">
-                @for (genre of film.genres; track genre.id) {
-                    <tui-badge class="tui-space_right-1">{{genre.name}}</tui-badge>
-                }
-            </div>
-        </div>
-        <div class="film-info-item">
-            <div class="film-info-title">Продюссер:</div>
-            <div class="film-info-value">{{info.director}}</div>
-        </div>
-    }
+    </div>
+    <div class="film-info-item">
+        <div class="film-info-title">Режиссер:</div>
+        <div class="film-info-value">{{film | tuiMapper : getDirectorName}}</div>
+    </div>
     <div class="film-info-item">
         <div class="film-info-title">Год производства:</div>
         <div class="film-info-value"> {{film.release_date}}</div>
@@ -32,11 +26,11 @@
     </div>
     <div class="film-info-item">
         <div class="film-info-title">Бюджет:</div>
-        <div class="film-info-value"> {{ film.budget | tuiAmount | async }}</div>
+        <div class="film-info-value">${{ film.budget | tuiAmount | async }}</div>
     </div>
     <div class="film-info-item">
         <div class="film-info-title">Доход:</div>
-        <div class="film-info-value">{{film.revenue}}</div>
+        <div class="film-info-value">${{ film.revenue | tuiAmount | async }}</div>
     </div>    
     <div class="film-info-item">
         <div class="film-info-title">Продолжительность:</div>

@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 import { TuiBadge } from '@taiga-ui/kit';
 import { TuiMapperPipe } from '@taiga-ui/cdk';
 import { TuiAmountPipe } from '@taiga-ui/addon-commerce';
-import { FilmData, Genre, ProductionCountry } from '../../../models';
+import { FilmData, ProductionCountry } from '../../../models';
 import { FilmService } from '../film-service/film.service';
 
 @Component({
@@ -26,28 +26,11 @@ export class FilmInfoComponent {
     readonly getCountries = (countries: ProductionCountry[]) =>
         countries.map((country) => country.name);
 
-    private readonly filmService = inject(FilmService);
+    getDirectorName(film: FilmData): string {
+        const director = film.credits.crew.find(
+            (person) => person.job === 'Director'
+        );
 
-    readonly film$ = this.filmService.film$;
-
-    readonly info$ = this.film$.pipe(
-        map((filmData) => {
-            const genres = filmData?.genres.map((genre) => ' ' + genre.name);
-            const countries = filmData?.production_countries.map(
-                (country) => country.name
-            );
-            const director = filmData?.credits.crew.find(
-                (person) => person.job === 'Director'
-            )?.name;
-            const actors = filmData?.credits.cast.map((person) => {
-                person.name, person.character;
-            });
-            return {
-                genres,
-                countries,
-                director,
-                actors,
-            };
-        })
-    );
+        return director?.name ?? '';
+    }
 }
