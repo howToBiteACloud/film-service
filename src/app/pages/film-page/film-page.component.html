@@ -1,5 +1,4 @@
 @let film = film$ | async;
-@let isLoading = (isLoading$ | async)!;
 
 @if (film) {
     <div class="film-row">
@@ -31,7 +30,6 @@
             <app-film-card
                 class="recommendation-list__item"
                 [data]="recommendation"
-                [showSkeleton]="isLoading"
             ></app-film-card>
         }
     </div>

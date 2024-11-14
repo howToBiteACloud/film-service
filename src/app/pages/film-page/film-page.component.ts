@@ -45,7 +45,6 @@ export class FilmPageComponent implements OnInit {
     readonly mockFilm = mockFilmData;
 
     readonly film$ = this.filmService.film$;
-    readonly isLoading$ = this.filmService.isLoading$;
 
     ngOnInit() {
         if (this.filmId) {
