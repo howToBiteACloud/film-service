@@ -1,21 +1,23 @@
 @let films = films$ | async;
 @let totalPages = totalPages$ | async;
 @let isLoading = isLoading$ | async;
-<!--prettier криво форматирует-->
 
 @if (isLoading) {
     <div class="film-list-wrapper">
         @for (index of 20 | tuiRepeatTimes; track index) {
             <div>
                 <div class="skeleton-card" [tuiSkeleton]="true"></div>
-                <div  class="skeleton-title" tuiSkeleton="Thistextwillbereplacedby a skeleton"></div>
+                <div
+                    class="skeleton-title"
+                    tuiSkeleton="Thistextwillbereplacedby a skeleton"
+                ></div>
             </div>
         }
     </div>
 } @else {
     <div class="film-list-wrapper">
         @for (film of films; track film.id) {
-            <app-film-card [data]="film"></app-film-card>
+            <app-film-card class="film-card" [data]="film"></app-film-card>
         }
     </div>
     <tui-pagination

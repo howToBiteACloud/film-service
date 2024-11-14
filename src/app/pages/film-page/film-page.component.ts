@@ -6,10 +6,15 @@ import {
     OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PosterComponent } from '../../components/poster/poster.component';
-import { FilmService } from './film-service/film.service';
-import { FilmInfoComponent } from './film-info/film-info.component';
+import { TuiMapperPipe } from '@taiga-ui/cdk';
+
+import { PosterComponent } from '../../components';
+import { FilmCardComponent } from '../../components/film-card/film-card.component';
+import { FilmData } from '../../models';
 import { FilmActorsComponent } from './film-actors/film-actors.component';
+import { FilmInfoComponent } from './film-info/film-info.component';
+import { FilmService } from './film-service/film.service';
+import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
 
 @Component({
     selector: 'app-film-page',
@@ -19,6 +24,9 @@ import { FilmActorsComponent } from './film-actors/film-actors.component';
         FilmInfoComponent,
         PosterComponent,
         FilmActorsComponent,
+        FilmTrailerComponent,
+        TuiMapperPipe,
+        FilmCardComponent,
     ],
     templateUrl: './film-page.component.html',
     styleUrl: './film-page.component.less',
@@ -46,5 +54,13 @@ export class FilmPageComponent implements OnInit {
 
     onError() {
         this.isLoading = false;
+    }
+
+    getTrailer(film: FilmData) {
+        return film.videos.results.find((video) => video.type === 'Trailer');
+    }
+
+    getRecommendations(film: FilmData) {
+        return film.recommendations.results.slice(0, 5);
     }
 }

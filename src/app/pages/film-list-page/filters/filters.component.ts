@@ -5,10 +5,11 @@ import {
     OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+
 import { Genre } from '../../../models';
 import { FilmListService } from '../film-list-service/film-list.service';
-import { GenresFilterComponent } from './genres-filter/genres-filter.component';
 import { DateFilterComponent } from './date-filter/date-filter.component';
+import { GenresFilterComponent } from './genres-filter/genres-filter.component';
 
 @Component({
     selector: 'app-filters',

@@ -1,3 +1,5 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
 :host {
     display: block;
 }
@@ -5,6 +7,13 @@
 .film-info-wrapper {
     display: flex;
     flex-direction: column;
+}
+
+.film-title {
+    @media @tui-mobile {
+        margin-top: 20px;
+        text-align: center;
+    }
 }
 
 .film-info-item {
@@ -22,4 +31,6 @@
 
 .film-info-value {
     flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0%;
 }

@@ -1,43 +1,55 @@
 <div class="film-info-wrapper">
-    <div class="tui-text_h4">{{film.title}}</div>
+    <div class="tui-text_h4 film-title">{{ film.title }}</div>
     <div class="film-info-item">
-        <div class="film-info-title">Страна:</div>
-        <div>{{film.production_countries | tuiMapper : getCountries}}</div>
+        <div class="film-info-title tui-space_top-4">Страна:</div>
+        <div class="film-info-value">
+            {{ film.production_countries | tuiMapper: getCountries }}
+        </div>
     </div>
     <div class="film-info-item">
         <div class="film-info-title">Жанры:</div>
         <div class="film-info-value">
             @for (genre of film.genres; track genre.id) {
-                <tui-badge class="tui-space_right-1">{{genre.name}}</tui-badge>
+                <tui-badge class="tui-space_right-1" size="s">{{
+                    genre.name
+                }}</tui-badge>
             }
         </div>
     </div>
     <div class="film-info-item">
         <div class="film-info-title">Режиссер:</div>
-        <div class="film-info-value">{{film | tuiMapper : getDirectorName}}</div>
+        <div class="film-info-value">
+            {{ film | tuiMapper: getDirectorName }}
+        </div>
     </div>
     <div class="film-info-item">
         <div class="film-info-title">Год производства:</div>
-        <div class="film-info-value"> {{film.release_date}}</div>
+        <div class="film-info-value">
+            {{ film | tuiMapper: getReleaseDate }}
+        </div>
     </div>
     <div class="film-info-item">
         <div class="film-info-title">Оценки:</div>
-        <div class="film-info-value">{{film.vote_average}}</div>
+        <div class="film-info-value">
+            {{ film | tuiMapper: getFixedAverageVote }}
+        </div>
     </div>
     <div class="film-info-item">
         <div class="film-info-title">Бюджет:</div>
-        <div class="film-info-value">${{ film.budget | tuiAmount | async }}</div>
+        <div class="film-info-value">
+            ${{ film.budget | tuiAmount | async }}
+        </div>
     </div>
     <div class="film-info-item">
         <div class="film-info-title">Доход:</div>
-        <div class="film-info-value">${{ film.revenue | tuiAmount | async }}</div>
-    </div>    
-    <div class="film-info-item">
-        <div class="film-info-title">Продолжительность:</div>
-        <div class="film-info-value">{{film.runtime}}</div>
+        <div class="film-info-value">
+            ${{ film.revenue | tuiAmount | async }}
+        </div>
     </div>
     <div class="film-info-item">
-        <div class="film-info-title">????:</div>
-        <div class="film-info-value">что-то ещё?</div>
+        <div class="film-info-title">Продолжительность:</div>
+        <div class="film-info-value">
+            {{ film | tuiMapper: getFixedRuntime }}
+        </div>
     </div>
 </div>

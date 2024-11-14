@@ -1,18 +1,19 @@
+import { CommonModule } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
     inject,
     Input,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TUI_DEFAULT_MATCHER, tuiPure } from '@taiga-ui/cdk';
 import { TuiDataList } from '@taiga-ui/core';
 import { TuiDataListWrapper, TuiStringifyContentPipe } from '@taiga-ui/kit';
 import {
     TuiMultiSelectModule,
     TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
-import { TUI_DEFAULT_MATCHER, tuiPure } from '@taiga-ui/cdk';
+
 import { Genre } from '../../../../models';
 import { FilmListService } from '../../film-list-service/film-list.service';
 

@@ -1,5 +1,22 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
 :host {
     display: block;
+
+    @media @tui-mobile {
+        text-align: center;
+    }
+}
+
+.film-cast {
+    @media @tui-mobile {
+        display: flex;
+        gap: 2px;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: center;
+        margin: 0 4px;
+    }
 }
 
 .actor-name {
@@ -10,4 +27,8 @@
     font: var(--tui-font-text-ui-xs);
     color: var(--tui-text-tertiary);
     margin-bottom: 4px;
+
+    @media @tui-mobile {
+        margin: 0 4px;
+    }
 }

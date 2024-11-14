@@ -1,16 +1,11 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    inject,
-    Input,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { map } from 'rxjs/operators';
-import { TuiBadge } from '@taiga-ui/kit';
-import { TuiMapperPipe } from '@taiga-ui/cdk';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { TuiAmountPipe } from '@taiga-ui/addon-commerce';
+import { TuiMapperPipe } from '@taiga-ui/cdk';
+import { TuiBadge } from '@taiga-ui/kit';
+
 import { FilmData, ProductionCountry } from '../../../models';
-import { FilmService } from '../film-service/film.service';
+import { getTimeFromMins } from '../../../shared/utils';
 
 @Component({
     selector: 'app-film-info',
@@ -24,13 +19,26 @@ export class FilmInfoComponent {
     @Input({ required: true }) film!: FilmData;
 
     readonly getCountries = (countries: ProductionCountry[]) =>
-        countries.map((country) => country.name);
+        countries.map((country) => country.name).join(', ');
+
+    readonly getFixedAverageVote = (film: FilmData) =>
+        film.vote_average.toFixed(1);
+
+    readonly getFixedRuntime = (film: FilmData) =>
+        getTimeFromMins(film.runtime);
 
     getDirectorName(film: FilmData): string {
         const director = film.credits.crew.find(
-            (person) => person.job === 'Director'
+            (person) => person.job === 'Director',
         );
 
         return director?.name ?? '';
+    }
+
+    getReleaseDate(film: FilmData): string {
+        const formatDate = film.release_date.split('-');
+        const releaseDate =
+            formatDate[2] + '.' + formatDate[1] + '.' + formatDate[0];
+        return releaseDate;
     }
 }

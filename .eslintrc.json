@@ -1,7 +1,12 @@
 {
     "root": true,
     "ignorePatterns": ["!**/*"],
-    "plugins": ["@nx", "eslint-plugin-import"],
+    "plugins": [
+        "@nx",
+        "eslint-plugin-import",
+        "unused-imports",
+        "simple-import-sort"
+    ],
     "overrides": [
         {
             "files": ["*.ts", "*.tsx"],
@@ -16,6 +21,7 @@
         {
             "files": ["*.ts"],
             "extends": [
+                "plugin:prettier/recommended",
                 "plugin:@nx/angular",
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
@@ -44,13 +50,27 @@
                 "eqeqeq": ["error"],
                 "no-unreachable": ["error"],
                 "prefer-const": ["error"],
-                "import/order": ["error"]
+                "import/order": ["error"],
+                "unused-imports/no-unused-imports": "error",
+                "simple-import-sort/imports": "error",
+                "simple-import-sort/exports": "error"
             }
         },
         {
             "files": ["*.html"],
-            "extends": ["plugin:@nx/angular-template"],
+            "extends": [
+                "plugin:@nx/angular-template",
+                "plugin:@angular-eslint/template/recommended"
+            ],
             "rules": {}
+        },
+        {
+            "files": ["*.html"],
+            "excludedFiles": ["*inline-template-*.component.html"],
+            "extends": ["plugin:prettier/recommended"],
+            "rules": {
+                "prettier/prettier": ["error", { "parser": "angular" }]
+            }
         }
     ]
 }

@@ -1,10 +1,12 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
 :host {
     display: flex;
     justify-content: space-between;
     padding-left: 16px;
     padding-right: 16px;
 
-    @media screen and (max-width: 47.9625em) {
+    @media @tui-mobile {
         flex-direction: column;
     }
 }

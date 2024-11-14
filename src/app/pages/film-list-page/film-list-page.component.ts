@@ -4,9 +4,10 @@ import {
     inject,
     OnInit,
 } from '@angular/core';
+
 import { FilmCardsComponent } from './film-cards/film-cards.component';
-import { FiltersComponent } from './filters/filters.component';
 import { FilmListService } from './film-list-service/film-list.service';
+import { FiltersComponent } from './filters/filters.component';
 
 @Component({
     selector: 'app-film-list-page',

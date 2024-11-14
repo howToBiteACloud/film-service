@@ -1,13 +1,33 @@
 @let film = film$ | async;
 
 @if (film) {
-    <div>
-        <app-poster 
-            class="poster"
-            [alt]="film.title"
-            [path]="film.poster_path">
-        </app-poster>
+    <div class="film-row">
+        <div>
+            <app-poster
+                class="poster"
+                [alt]="film.title"
+                [path]="film.poster_path"
+            >
+            </app-poster>
+        </div>
+
+        <app-film-info [film]="film"></app-film-info>
+        <app-film-actors [actors]="film.credits.cast"></app-film-actors>
     </div>
-    <app-film-info [film]="film"></app-film-info>
-    <app-film-actors [actors]="film.credits.cast"></app-film-actors>
+    <div class="film-row">
+        @let trailer = film | tuiMapper: getTrailer;
+        @if (trailer) {
+            <app-film-trailer [video]="trailer"></app-film-trailer>
+        }
+        <div class="synopsis">{{ film.overview }}</div>
+    </div>
+    <div class="recommendations-title tui-text_h6">Смотрите также:</div>
+    <div class="recommendation-list">
+        @for (
+            recommendation of film | tuiMapper: getRecommendations;
+            track recommendation.id
+        ) {
+            <app-film-card [data]="recommendation"></app-film-card>
+        }
+    </div>
 }

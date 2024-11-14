@@ -1,9 +1,43 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
 :host {
+    display: block;
+}
+
+.film-row {
     display: flex;
-    margin-left: 60px;
-    gap: 40px;
+    justify-content: space-around;
+    gap: 16px;
+    padding: 0 16px;
+
+    & + & {
+        margin-top: 40px;
+    }
+
+    @media @tui-mobile {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0;
+    }
 }
 
 .poster {
-    width: 220px;
+    width: 300px;
+}
+
+.synopsis {
+    text-align: justify;
+}
+
+.recommendations-title {
+    width: 100%;
+    text-align: center;
+    margin: 20px 0 10px 0;
+}
+
+.recommendation-list {
+    display: flex;
+    gap: 16px;
+    padding: 0 16px;
+    justify-content: space-between;
 }

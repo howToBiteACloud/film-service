@@ -1,15 +1,23 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
 :host {
     display: block;
 }
 
 .app-container {
-    background-color: var(--tui-background-base-alt);
+    background-color: var(--tui-background-neutral-2);
 }
 
 .page-container {
-    margin-top: 60px;
+    background-color: var(--tui-background-base-alt);
+    width: 76%;
+    margin: auto;
+    padding-top: 60px;
+    box-sizing: border-box;
 
-    @media screen and (max-width: 47.9625em) {
+    @media @tui-tablet {
         margin: 0;
+        width: 100%;
+        padding-top: 20px;
     }
 }

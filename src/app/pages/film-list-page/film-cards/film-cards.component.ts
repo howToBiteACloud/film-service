@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TuiPagination } from '@taiga-ui/kit';
-import { TuiTextfieldControllerModule } from '@taiga-ui/legacy';
-import { TuiSkeleton } from '@taiga-ui/kit';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TuiRepeatTimesPipe } from '@taiga-ui/cdk';
+import { TuiPagination } from '@taiga-ui/kit';
+import { TuiSkeleton } from '@taiga-ui/kit';
+import { TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+
+import { FilmCardComponent } from '../../../components/film-card/film-card.component';
 import { FilmListService } from '../film-list-service/film-list.service';
-import { FilmCardComponent } from './film-card/film-card.component';
 
 @Component({
     selector: 'app-film-cards',

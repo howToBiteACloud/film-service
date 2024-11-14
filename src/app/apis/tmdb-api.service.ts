@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { DiscoverMovieParams, FilmData, Genre } from '../models';
 import { FilmsResponse } from '../models';
 
@@ -37,7 +38,7 @@ export class TmdbApiService {
         return this.httpClient.get<FilmData>(host + `/movie/${filmId}`, {
             params: {
                 language,
-                append_to_response: 'credits',
+                append_to_response: 'credits,videos,similar,recommendations',
             },
         });
     }
