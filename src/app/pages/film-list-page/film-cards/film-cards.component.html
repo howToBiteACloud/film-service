@@ -17,7 +17,11 @@
 } @else {
     <div class="film-list-wrapper">
         @for (film of films; track film.id) {
-            <app-film-card class="film-card" [data]="film"></app-film-card>
+            <app-film-card
+                class="film-card"
+                [data]="film"
+                [showSkeleton]="false"
+            ></app-film-card>
         }
     </div>
     <tui-pagination

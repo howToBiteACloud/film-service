@@ -38,7 +38,7 @@ export class TmdbApiService {
         return this.httpClient.get<FilmData>(host + `/movie/${filmId}`, {
             params: {
                 language,
-                append_to_response: 'credits,videos,similar,recommendations',
+                append_to_response: 'credits,videos,recommendations',
             },
         });
     }

@@ -1,4 +1,5 @@
 @let film = film$ | async;
+@let isLoading = (isLoading$ | async)!;
 
 @if (film) {
     <div class="film-row">
@@ -27,7 +28,36 @@
             recommendation of film | tuiMapper: getRecommendations;
             track recommendation.id
         ) {
-            <app-film-card [data]="recommendation"></app-film-card>
+            <app-film-card
+                class="recommendation-list__item"
+                [data]="recommendation"
+                [showSkeleton]="isLoading"
+            ></app-film-card>
+        }
+    </div>
+} @else {
+    <div class="film-row">
+        <div class="poster-skeleton" [tuiSkeleton]="true"></div>
+        <div class="info-skeleton" [tuiSkeleton]="true"></div>
+        <div class="actors-skeleton" [tuiSkeleton]="true"></div>
+    </div>
+    <div class="film-row">
+        <div class="trailer-skeleton" [tuiSkeleton]="true"></div>
+        <div class="synopsis-skeleton" [tuiSkeleton]="true"></div>
+    </div>
+    <div></div>
+    <div class="recommendations-title-skeleton">
+        <div tuiSkeleton="Thistextwillbereplacedby a skeleton"></div>
+    </div>
+    <div class="recommendation-list recommendation-list-skeleton">
+        @for (index of 5 | tuiRepeatTimes; track index) {
+            <div class="recommendation-list__item">
+                <div class="card-skeleton" [tuiSkeleton]="true"></div>
+                <div
+                    class="title-skeleton"
+                    tuiSkeleton="Thistextwillbereplacedby a skeleton"
+                ></div>
+            </div>
         }
     </div>
 }

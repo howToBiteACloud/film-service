@@ -6,7 +6,8 @@ import {
     OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TuiMapperPipe } from '@taiga-ui/cdk';
+import { TuiMapperPipe, TuiRepeatTimesPipe } from '@taiga-ui/cdk';
+import { TuiSkeleton } from '@taiga-ui/kit';
 
 import { PosterComponent } from '../../components';
 import { FilmCardComponent } from '../../components/film-card/film-card.component';
@@ -15,6 +16,8 @@ import { FilmActorsComponent } from './film-actors/film-actors.component';
 import { FilmInfoComponent } from './film-info/film-info.component';
 import { FilmService } from './film-service/film.service';
 import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
+
+const mockFilmData: FilmData = {} as FilmData;
 
 @Component({
     selector: 'app-film-page',
@@ -27,6 +30,8 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
         FilmTrailerComponent,
         TuiMapperPipe,
         FilmCardComponent,
+        TuiSkeleton,
+        TuiRepeatTimesPipe,
     ],
     templateUrl: './film-page.component.html',
     styleUrl: './film-page.component.less',
@@ -37,23 +42,15 @@ export class FilmPageComponent implements OnInit {
     private readonly activatedRoute = inject(ActivatedRoute);
 
     readonly filmId = this.activatedRoute.snapshot.paramMap.get('filmId');
+    readonly mockFilm = mockFilmData;
 
     readonly film$ = this.filmService.film$;
-
-    isLoading = true;
+    readonly isLoading$ = this.filmService.isLoading$;
 
     ngOnInit() {
         if (this.filmId) {
             this.filmService.loadFilm(this.filmId);
         }
-    }
-
-    onLoad() {
-        this.isLoading = false;
-    }
-
-    onError() {
-        this.isLoading = false;
     }
 
     getTrailer(film: FilmData) {

@@ -1,7 +1,9 @@
 <div class="film-info-wrapper">
-    <div class="tui-text_h4 film-title">{{ film.title }}</div>
-    <div class="film-info-item">
-        <div class="film-info-title tui-space_top-4">Страна:</div>
+    <div class="tui-text_h4 film-title">
+        {{ film.title }}
+    </div>
+    <div class="film-info-item tui-space_top-4">
+        <div class="film-info-title">Страна:</div>
         <div class="film-info-value">
             {{ film.production_countries | tuiMapper: getCountries }}
         </div>
@@ -10,9 +12,9 @@
         <div class="film-info-title">Жанры:</div>
         <div class="film-info-value">
             @for (genre of film.genres; track genre.id) {
-                <tui-badge class="tui-space_right-1" size="s">{{
-                    genre.name
-                }}</tui-badge>
+                <tui-badge class="tui-space_right-1" size="s">
+                    {{ genre.name }}
+                </tui-badge>
             }
         </div>
     </div>
