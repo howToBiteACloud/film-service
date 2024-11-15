@@ -17,8 +17,6 @@ import { FilmInfoComponent } from './film-info/film-info.component';
 import { FilmService } from './film-service/film.service';
 import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
 
-const mockFilmData: FilmData = {} as FilmData;
-
 @Component({
     selector: 'app-film-page',
     standalone: true,
@@ -42,7 +40,6 @@ export class FilmPageComponent implements OnInit {
     private readonly activatedRoute = inject(ActivatedRoute);
 
     readonly filmId = this.activatedRoute.snapshot.paramMap.get('filmId');
-    readonly mockFilm = mockFilmData;
 
     readonly film$ = this.filmService.film$;
 
