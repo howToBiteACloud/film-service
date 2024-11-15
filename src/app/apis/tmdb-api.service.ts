@@ -37,8 +37,8 @@ export class TmdbApiService {
     getFilm(filmId: string): Observable<FilmData> {
         return this.httpClient.get<FilmData>(host + `/movie/${filmId}`, {
             params: {
-                language: 'en',
-                append_to_response: 'credits,videos,recommendations,reviews',
+                language,
+                append_to_response: 'credits,videos,recommendations',
             },
         });
     }
