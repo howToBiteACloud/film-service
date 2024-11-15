@@ -15,14 +15,4 @@ import { PosterComponent } from '..';
 })
 export class FilmCardComponent {
     @Input({ required: true }) data!: CommonFilmData;
-
-    isLoading = true;
-
-    onLoad() {
-        this.isLoading = false;
-    }
-
-    onError() {
-        this.isLoading = false;
-    }
 }

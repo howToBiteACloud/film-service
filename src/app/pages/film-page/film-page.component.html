@@ -1,6 +1,7 @@
 @let film = film$ | async;
+@let isLoading = isLoading$ | async;
 
-@if (film) {
+@if (!isLoading && film) {
     <div class="film-row">
         <div>
             <app-poster

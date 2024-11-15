@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { TuiMapperPipe, TuiRepeatTimesPipe } from '@taiga-ui/cdk';
 import { TuiSkeleton } from '@taiga-ui/kit';
+import { map } from 'rxjs/operators';
 
 import { PosterComponent } from '../../components';
 import { FilmCardComponent } from '../../components/film-card/film-card.component';
@@ -34,19 +35,25 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
     templateUrl: './film-page.component.html',
     styleUrl: './film-page.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [FilmService],
 })
 export class FilmPageComponent implements OnInit {
     private readonly filmService = inject(FilmService);
     private readonly activatedRoute = inject(ActivatedRoute);
 
-    readonly filmId = this.activatedRoute.snapshot.paramMap.get('filmId');
+    readonly filmId$ = this.activatedRoute.paramMap.pipe(
+        map((paramMap) => paramMap.get('filmId')),
+    );
 
     readonly film$ = this.filmService.film$;
+    readonly isLoading$ = this.filmService.isLoading$;
 
     ngOnInit() {
-        if (this.filmId) {
-            this.filmService.loadFilm(this.filmId);
-        }
+        this.filmId$.subscribe((filmId) => {
+            if (filmId) {
+                this.filmService.loadFilm(filmId);
+            }
+        });
     }
 
     getTrailer(film: FilmData) {

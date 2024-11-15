@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 import {
     BehaviorSubject,
     catchError,
@@ -6,7 +6,6 @@ import {
     NEVER,
     Subject,
     takeUntil,
-    tap,
 } from 'rxjs';
 
 import { TmdbApiService } from '../../../apis/tmdb-api.service';
@@ -18,10 +17,8 @@ import {
     successRequest,
 } from '../../film-list-page/helpers';
 
-@Injectable({
-    providedIn: 'root',
-})
-export class FilmService {
+@Injectable()
+export class FilmService implements OnDestroy {
     private readonly tmdbApiService = inject(TmdbApiService);
 
     private readonly destroy$ = new Subject<void>();
@@ -34,13 +31,16 @@ export class FilmService {
         map((state) => state.status === RequestStatus.Loading),
     );
 
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
     loadFilm(filmId: string) {
+        this.state$.next(loadingRequest());
         this.tmdbApiService
             .getFilm(filmId)
             .pipe(
-                tap(() => {
-                    this.state$.next(loadingRequest());
-                }),
                 catchError((error) => {
                     this.state$.next(failRequest(error));
 
