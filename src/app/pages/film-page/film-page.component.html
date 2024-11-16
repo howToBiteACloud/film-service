@@ -1,5 +1,6 @@
 @let film = film$ | async;
 @let isLoading = isLoading$ | async;
+@let visibleItemsCount = (visibleItemsCount$ | async)!;
 
 @if (!isLoading && film) {
     <div class="film-row">
@@ -21,17 +22,21 @@
         }
         <div class="synopsis">{{ film.overview }}</div>
     </div>
-    <div class="recommendations-title tui-text_h6">Смотрите также:</div>
-    <div class="recommendation-list">
-        @for (
-            recommendation of film | tuiMapper: getRecommendations;
-            track recommendation.id
-        ) {
-            <app-film-card
-                class="recommendation-list__item"
-                [data]="recommendation"
-            ></app-film-card>
-        }
+    <div class="film-row film-row_recommendation">
+        <div class="recommendations-title tui-text_h6">Смотрите также:</div>
+        <div class="film-recommendations">
+            <app-carousel
+                [gapSize]="4"
+                [countElements]="(visibleItemsCount$ | async)!"
+            >
+                @for (
+                    recommendation of film | tuiMapper: getRecommendations;
+                    track recommendation.id
+                ) {
+                    <app-film-card [data]="recommendation"></app-film-card>
+                }
+            </app-carousel>
+        </div>
     </div>
 } @else {
     <div class="film-row">
@@ -47,9 +52,9 @@
     <div class="recommendations-title-skeleton">
         <div tuiSkeleton="Thistextwillbereplacedby a skeleton"></div>
     </div>
-    <div class="recommendation-list recommendation-list-skeleton">
-        @for (index of 5 | tuiRepeatTimes; track index) {
-            <div class="recommendation-list__item">
+    <div class="recommendation-list-skeleton">
+        @for (index of visibleItemsCount | tuiRepeatTimes; track index) {
+            <div class="recommendation-list-skeleton__item">
                 <div class="card-skeleton" [tuiSkeleton]="true"></div>
                 <div
                     class="title-skeleton"

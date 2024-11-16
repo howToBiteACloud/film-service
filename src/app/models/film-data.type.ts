@@ -1,5 +1,5 @@
-import { BelongsToCollection } from './belongs-to-collection.type';
 import { CreditsResponse } from './credits-response.type';
+import { FilmStatus } from './film-status.enum';
 import { FilmVideosResponse } from './film-videos-response.type';
 import { Genre } from './genre.type';
 import { ProductionCompany } from './production-company.type';
@@ -25,7 +25,6 @@ export type CommonFilmData = Readonly<{
 
 export type FilmData = CommonFilmData &
     Readonly<{
-        belongs_to_collection: BelongsToCollection;
         budget: number;
         genres: Genre[];
         homepage: string;
@@ -36,7 +35,7 @@ export type FilmData = CommonFilmData &
         revenue: number;
         runtime: number;
         spoken_languages: SpokenLanguage[];
-        status: string; // enum
+        status: FilmStatus;
         tagline: string;
 
         // additional

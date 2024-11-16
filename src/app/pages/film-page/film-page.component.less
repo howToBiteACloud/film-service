@@ -2,16 +2,21 @@
 
 :host {
     display: block;
+    padding-bottom: 60px;
 }
 
 .film-row {
     display: flex;
     justify-content: space-around;
     gap: 16px;
-    padding: 0 16px;
+    padding: 0 24px;
 
     & + & {
         margin-top: 40px;
+    }
+
+    &_recommendation {
+        flex-direction: column;
     }
 
     @media @tui-mobile {
@@ -32,18 +37,12 @@
 .recommendations-title {
     width: 100%;
     text-align: center;
-    margin: 20px 0 10px 0;
 }
 
-.recommendation-list {
-    display: flex;
-    gap: 16px;
-    padding: 0 16px;
-    justify-content: space-between;
-}
-
-.recommendation-list__item {
-    flex: 1;
+.film-recommendations {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .poster-skeleton {
@@ -89,4 +88,15 @@
 
 .title-skeleton {
     width: 100%;
+}
+
+.recommendation-list-skeleton {
+    display: flex;
+    gap: 16px;
+    padding: 0 16px;
+    justify-content: space-between;
+}
+
+.recommendation-list-skeleton__item {
+    flex: 1;
 }

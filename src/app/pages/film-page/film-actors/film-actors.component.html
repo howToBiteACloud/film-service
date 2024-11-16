@@ -5,7 +5,7 @@
         <div class="actor-character">{{ actor.character }}</div>
     }
 </div>
-<a tuiLink class="tui-space_top-2 tui-text_body-s">
+<a class="tui-space_top-2 tui-text_body-s actors-count">
     Всего {{ actors.length }}
     {{ actors.length | tuiMapper: pluralize : ['актер', 'актера', 'актеров'] }}
 </a>

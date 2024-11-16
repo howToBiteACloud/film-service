@@ -3,8 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { DiscoverMovieParams, FilmData, Genre } from '../models';
-import { FilmsResponse } from '../models';
+import { DiscoverMovieParams, FilmData, FilmsResponse, Genre } from '../models';
 
 const host = 'https://api.themoviedb.org/3';
 const language = 'ru';

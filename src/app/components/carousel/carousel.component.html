@@ -1,0 +1,25 @@
+<button
+    class="carousel-button carousel-button_prev"
+    iconStart="@tui.chevron-left"
+    tuiIconButton
+    size="s"
+    type="button"
+    (click)="scrollCarousel(direction.Left)"
+>
+    Previous
+</button>
+<div class="carousel-container" #carousel>
+    <div class="carousel-list">
+        <ng-content></ng-content>
+    </div>
+</div>
+<button
+    class="carousel-button carousel-button_next"
+    iconStart="@tui.chevron-right"
+    tuiIconButton
+    size="s"
+    type="button"
+    (click)="scrollCarousel(direction.Right)"
+>
+    Next
+</button>

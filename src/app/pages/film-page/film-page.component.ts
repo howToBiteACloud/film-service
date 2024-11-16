@@ -7,11 +7,15 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TuiMapperPipe, TuiRepeatTimesPipe } from '@taiga-ui/cdk';
+import { TuiBreakpointMediaKey, TuiBreakpointService } from '@taiga-ui/core';
 import { TuiSkeleton } from '@taiga-ui/kit';
 import { map } from 'rxjs/operators';
 
-import { PosterComponent } from '../../components';
-import { FilmCardComponent } from '../../components/film-card/film-card.component';
+import {
+    CarouselComponent,
+    FilmCardComponent,
+    PosterComponent,
+} from '../../components';
 import { FilmData } from '../../models';
 import { FilmActorsComponent } from './film-actors/film-actors.component';
 import { FilmInfoComponent } from './film-info/film-info.component';
@@ -31,6 +35,7 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
         FilmCardComponent,
         TuiSkeleton,
         TuiRepeatTimesPipe,
+        CarouselComponent,
     ],
     templateUrl: './film-page.component.html',
     styleUrl: './film-page.component.less',
@@ -40,6 +45,13 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
 export class FilmPageComponent implements OnInit {
     private readonly filmService = inject(FilmService);
     private readonly activatedRoute = inject(ActivatedRoute);
+    private readonly breakpoint$ = inject(TuiBreakpointService);
+
+    readonly visibleItemsCount$ = this.breakpoint$.pipe(
+        map((media: TuiBreakpointMediaKey | null) =>
+            media === 'mobile' ? 3 : 5,
+        ),
+    );
 
     readonly filmId$ = this.activatedRoute.paramMap.pipe(
         map((paramMap) => paramMap.get('filmId')),
@@ -61,6 +73,6 @@ export class FilmPageComponent implements OnInit {
     }
 
     getRecommendations(film: FilmData) {
-        return film.recommendations.results.slice(0, 5);
+        return film.recommendations.results;
     }
 }
