@@ -1,0 +1,11 @@
+<div class="tui-text_h6 tui-space_bottom-4 tui-space_top-1">Актёры:</div>
+<div class="film-cast">
+    @for (actor of actors | tuiMapper: getTop10; track actor.id) {
+        <div class="tui-space_top-1 actor-name">{{ actor.name }}</div>
+        <div class="actor-character">{{ actor.character }}</div>
+    }
+</div>
+<a class="tui-space_top-2 tui-text_body-s actors-count">
+    Всего {{ actors.length }}
+    {{ actors.length | tuiMapper: pluralize : ['актер', 'актера', 'актеров'] }}
+</a>

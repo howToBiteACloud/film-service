@@ -5,10 +5,11 @@ import {
     OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+
 import { Genre } from '../../../models';
-import { FilmService } from '../film-service/film.service';
-import { GenresFilterComponent } from './genres-filter/genres-filter.component';
+import { FilmListService } from '../film-list-service/film-list.service';
 import { DateFilterComponent } from './date-filter/date-filter.component';
+import { GenresFilterComponent } from './genres-filter/genres-filter.component';
 
 @Component({
     selector: 'app-filters',
@@ -19,7 +20,7 @@ import { DateFilterComponent } from './date-filter/date-filter.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FiltersComponent implements OnInit {
-    private readonly filmService = inject(FilmService);
+    private readonly filmListService = inject(FilmListService);
 
     readonly genresControl = new FormControl<Genre[]>([]);
     readonly datesControl = new FormControl<number | null>(null);
@@ -30,7 +31,7 @@ export class FiltersComponent implements OnInit {
 
     ngOnInit() {
         this.filtersForm.valueChanges.subscribe((value) => {
-            this.filmService.controlsChange(value);
+            this.filmListService.controlsChange(value);
         });
     }
 }

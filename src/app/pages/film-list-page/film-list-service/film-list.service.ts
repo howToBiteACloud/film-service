@@ -1,6 +1,7 @@
 import { inject, Injectable, OnDestroy } from '@angular/core';
-import { catchError, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, NEVER, Subject } from 'rxjs';
+import { catchError, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+
 import { TmdbApiService } from '../../../apis/tmdb-api.service';
 import {
     FilmListFilters,
@@ -9,15 +10,15 @@ import {
     RequestStatus,
 } from '../../../models';
 import {
+    failRequest,
+    loadingRequest,
     makeFilmParams,
     noneRequest,
     successRequest,
-    loadingRequest,
-    failRequest,
 } from '../helpers';
 
 @Injectable()
-export class FilmService implements OnDestroy {
+export class FilmListService implements OnDestroy {
     private readonly tmdbApiService = inject(TmdbApiService);
 
     private readonly destroy$ = new Subject<void>();
@@ -26,21 +27,21 @@ export class FilmService implements OnDestroy {
     private readonly currentFilters$ = new BehaviorSubject<FilmListFilters>({});
 
     private readonly state$ = new BehaviorSubject<RequestState<FilmsResponse>>(
-        noneRequest()
+        noneRequest(),
     );
 
     readonly films$ = this.state$.pipe(
-        map((state) => state.value?.results ?? [])
+        map((state) => state.value?.results ?? []),
     );
 
     readonly isLoading$ = this.state$.pipe(
-        map((state) => state.status === RequestStatus.Loading)
+        map((state) => state.status === RequestStatus.Loading),
     );
 
     readonly genres$ = this.tmdbApiService.getGenres();
 
     readonly totalPages$ = this.state$.pipe(
-        map((state) => state.value?.total_pages)
+        map((state) => state.value?.total_pages),
     );
 
     ngOnDestroy() {
@@ -76,7 +77,7 @@ export class FilmService implements OnDestroy {
 
                     return NEVER;
                 }),
-                takeUntil(this.destroy$)
+                takeUntil(this.destroy$),
             )
             .subscribe((response) => {
                 this.state$.next(successRequest(response));

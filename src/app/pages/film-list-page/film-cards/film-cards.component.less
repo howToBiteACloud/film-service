@@ -1,3 +1,5 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
 .skeleton-card {
     width: 140px;
     height: 210px;
@@ -16,4 +18,12 @@
 tui-pagination ::ng-deep .t-button {
     inline-size: auto;
     min-width: var(--tui-height-s);
+}
+
+.film-card {
+    width: 140px;
+
+    @media @tui-mobile {
+        width: calc(50% - 8px);
+    }
 }

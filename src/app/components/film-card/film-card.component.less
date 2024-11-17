@@ -1,29 +1,25 @@
-@import '@taiga-ui/core/styles/taiga-ui-local.less';
-
 :host {
     display: flex;
     flex-direction: column;
-    width: 140px;
     cursor: pointer;
 
     &:hover {
-        .film-card::after {
+        .poster::after {
             opacity: 1;
         }
     }
 }
 
-.poster {
-    display: block;
-    width: 100%;
-    height: 210px;
-    background-color: var(--tui-background-neutral-1);
-    color: transparent;
-    user-select: none;
+.card-wrapper {
+    color: inherit;
+    text-decoration: none;
 }
 
-.film-card {
+.poster {
     position: relative;
+    display: block;
+    color: transparent;
+    user-select: none;
 
     &:after {
         position: absolute;
@@ -39,8 +35,11 @@
     }
 }
 
-.loader {
-    display: flex;
-    inline-size: fit-content;
-    margin: 1rem 0;
+.skeleton-card {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+}
+
+.skeleton-title {
+    width: 100%;
 }

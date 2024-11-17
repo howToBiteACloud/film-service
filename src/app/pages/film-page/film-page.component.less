@@ -1,0 +1,102 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+:host {
+    display: block;
+    padding-bottom: 60px;
+}
+
+.film-row {
+    display: flex;
+    justify-content: space-around;
+    gap: 16px;
+    padding: 0 24px;
+
+    & + & {
+        margin-top: 40px;
+    }
+
+    &_recommendation {
+        flex-direction: column;
+    }
+
+    @media @tui-mobile {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0;
+    }
+}
+
+.poster {
+    width: 300px;
+}
+
+.synopsis {
+    text-align: justify;
+}
+
+.recommendations-title {
+    width: 100%;
+    text-align: center;
+}
+
+.film-recommendations {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.poster-skeleton {
+    width: 300px;
+    aspect-ratio: 2 / 3;
+}
+
+.info-skeleton {
+    flex: 1;
+}
+
+.actors-skeleton {
+    width: 120px;
+}
+
+.trailer-skeleton {
+    display: block;
+    aspect-ratio: 16 / 9;
+    width: 50%;
+    flex-shrink: 0;
+
+    @media @tui-mobile {
+        width: 100%;
+    }
+}
+
+.synopsis-skeleton {
+    width: 50%;
+}
+
+.recommendations-title-skeleton {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.card-skeleton {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+}
+
+.title-skeleton {
+    width: 100%;
+}
+
+.recommendation-list-skeleton {
+    display: flex;
+    gap: 16px;
+    padding: 0 16px;
+    justify-content: space-between;
+}
+
+.recommendation-list-skeleton__item {
+    flex: 1;
+}

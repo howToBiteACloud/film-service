@@ -1,0 +1,66 @@
+@let film = film$ | async;
+@let isLoading = isLoading$ | async;
+@let visibleItemsCount = (visibleItemsCount$ | async)!;
+
+@if (!isLoading && film) {
+    <div class="film-row">
+        <div>
+            <app-poster
+                class="poster"
+                [alt]="film.title"
+                [path]="film.poster_path"
+            >
+            </app-poster>
+        </div>
+        <app-film-info [film]="film"></app-film-info>
+        <app-film-actors [actors]="film.credits.cast"></app-film-actors>
+    </div>
+    <div class="film-row">
+        @let trailer = film | tuiMapper: getTrailer;
+        @if (trailer) {
+            <app-film-trailer [video]="trailer"></app-film-trailer>
+        }
+        <div class="synopsis">{{ film.overview }}</div>
+    </div>
+    <div class="film-row film-row_recommendation">
+        <div class="recommendations-title tui-text_h6">Смотрите также:</div>
+        <div class="film-recommendations">
+            <app-carousel
+                [gapSize]="4"
+                [countElements]="(visibleItemsCount$ | async)!"
+            >
+                @for (
+                    recommendation of film | tuiMapper: getRecommendations;
+                    track recommendation.id
+                ) {
+                    <app-film-card [data]="recommendation"></app-film-card>
+                }
+            </app-carousel>
+        </div>
+    </div>
+} @else {
+    <div class="film-row">
+        <div class="poster-skeleton" [tuiSkeleton]="true"></div>
+        <div class="info-skeleton" [tuiSkeleton]="true"></div>
+        <div class="actors-skeleton" [tuiSkeleton]="true"></div>
+    </div>
+    <div class="film-row">
+        <div class="trailer-skeleton" [tuiSkeleton]="true"></div>
+        <div class="synopsis-skeleton" [tuiSkeleton]="true"></div>
+    </div>
+    <div></div>
+    <div class="recommendations-title-skeleton">
+        <div tuiSkeleton="Thistextwillbereplacedby a skeleton"></div>
+    </div>
+    <div class="recommendation-list-skeleton">
+        @for (index of visibleItemsCount | tuiRepeatTimes; track index) {
+            <div class="recommendation-list-skeleton__item">
+                <div class="card-skeleton" [tuiSkeleton]="true"></div>
+                <div
+                    class="title-skeleton"
+                    tuiSkeleton="Thistextwillbereplacedby a skeleton"
+                ></div>
+            </div>
+        }
+    </div>
+}
