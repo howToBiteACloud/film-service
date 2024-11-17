@@ -3,7 +3,13 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { DiscoverMovieParams, FilmData, FilmsResponse, Genre } from '../models';
+import {
+    DiscoverMovieParams,
+    FilmData,
+    FilmsResponse,
+    Genre,
+    RequestToken,
+} from '../models';
 
 const host = 'https://api.themoviedb.org/3';
 const language = 'ru';
@@ -39,6 +45,29 @@ export class TmdbApiService {
                 language,
                 append_to_response: 'credits,videos,recommendations',
             },
+        });
+    }
+
+    getRequestToken(): Observable<RequestToken> {
+        return this.httpClient.get<RequestToken>(
+            host + '/authentication/token/new',
+        );
+    }
+
+    createSession(requestToken: string): Observable<string> {
+        return this.httpClient
+            .post<{ session_id: string }>(
+                host + '/authentication/session/new',
+                {
+                    request_token: requestToken,
+                },
+            )
+            .pipe(map(({ session_id }) => session_id));
+    }
+
+    getAccount(session_id: string): Observable<any> {
+        return this.httpClient.get<{ session_id: string }>(host + '/account', {
+            params: { session_id },
         });
     }
 }
