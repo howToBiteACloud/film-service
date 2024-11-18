@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, interval, Observable, of } from 'rxjs';
-import { filter, switchMap, takeWhile, tap } from 'rxjs/operators';
+import { catchError, filter, switchMap, takeWhile, tap } from 'rxjs/operators';
 
-import { EncryptionService } from '../../apis/encryption.service';
 import { TmdbApiService } from '../../apis/tmdb-api.service';
+import { EncryptionService } from './encryption.service';
 
 @Injectable({
     providedIn: 'root',
@@ -13,12 +13,22 @@ export class AuthorizationService {
     private readonly encryptionService = inject(EncryptionService);
     private readonly sessionIdKey = 'sessionId';
 
+    readonly accountLoading$ = new BehaviorSubject<boolean>(false);
+
     readonly sessionId$ = new BehaviorSubject(this.getSessionId());
     readonly account$ = this.sessionId$.pipe(
+        tap(() => this.accountLoading$.next(true)),
         switchMap((sessionId) => {
             return sessionId
                 ? this.tmdbApiService.getAccount(sessionId)
                 : of(null);
+        }),
+        catchError(() => {
+            this.logout();
+            return of(null);
+        }),
+        tap(() => {
+            this.accountLoading$.next(false);
         }),
     );
 
@@ -49,6 +59,11 @@ export class AuthorizationService {
                 this.setSessionId(sessionId);
             }),
         );
+    }
+
+    logout() {
+        localStorage.removeItem(this.sessionIdKey);
+        this.sessionId$.next(null);
     }
 
     private setSessionId(sessionId: string) {

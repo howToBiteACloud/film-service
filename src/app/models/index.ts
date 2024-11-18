@@ -1,3 +1,4 @@
+export * from './account-data.type';
 export * from './credits-response.type';
 export * from './discover-movie-params.type';
 export * from './film-data.type';

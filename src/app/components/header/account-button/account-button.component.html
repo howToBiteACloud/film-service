@@ -1,0 +1,17 @@
+<tui-avatar
+    class="avatar"
+    size="m"
+    [src]="
+        'https://image.tmdb.org/t/p/w500/' + account.avatar.tmdb.avatar_path
+            | tuiFallbackSrc: '@tui.user'
+            | async
+    "
+    [tuiDropdown]="dropdownContent"
+    [(tuiDropdownOpen)]="open"
+/>
+<ng-template #dropdownContent>
+    <tui-data-list tuiDataListDropdownManager>
+        <a tuiOption routerLink="/profile" (click)="close()">Профиль</a>
+        <button tuiOption (click)="logout()">Выйти</button>
+    </tui-data-list>
+</ng-template>

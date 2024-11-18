@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
+    AccountData,
     DiscoverMovieParams,
     FilmData,
     FilmsResponse,
@@ -65,8 +66,8 @@ export class TmdbApiService {
             .pipe(map(({ session_id }) => session_id));
     }
 
-    getAccount(session_id: string): Observable<any> {
-        return this.httpClient.get<{ session_id: string }>(host + '/account', {
+    getAccount(session_id: string): Observable<AccountData> {
+        return this.httpClient.get<AccountData>(host + '/account', {
             params: { session_id },
         });
     }

@@ -6,23 +6,23 @@ import {
     inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { TuiFallbackSrcPipe } from '@taiga-ui/core';
-import { TuiAvatar, TuiTabs } from '@taiga-ui/kit';
-import { TmdbApiService } from 'src/app/apis/tmdb-api.service';
+import { RouterLink } from '@angular/router';
+import { TuiButton } from '@taiga-ui/core';
+import { TuiAvatar, TuiSkeleton } from '@taiga-ui/kit';
 
 import { AuthorizationService } from '../../shared/services/authorization.service';
+import { AccountButtonComponent } from './account-button/account-button.component';
 
 @Component({
     selector: 'app-header',
     standalone: true,
     imports: [
         CommonModule,
-        TuiAvatar,
-        TuiFallbackSrcPipe,
-        TuiTabs,
         RouterLink,
-        RouterLinkActive,
+        AccountButtonComponent,
+        TuiButton,
+        TuiSkeleton,
+        TuiAvatar,
     ],
     templateUrl: './header.component.html',
     styleUrl: './header.component.less',
@@ -31,9 +31,9 @@ import { AuthorizationService } from '../../shared/services/authorization.servic
 export class HeaderComponent {
     private readonly authorizationService = inject(AuthorizationService);
     private readonly destroyRef = inject(DestroyRef);
-    private readonly tmdbApiService = inject(TmdbApiService);
 
     readonly account$ = this.authorizationService.account$;
+    readonly accountLoading$ = this.authorizationService.accountLoading$;
 
     openAuthWindow() {
         this.authorizationService

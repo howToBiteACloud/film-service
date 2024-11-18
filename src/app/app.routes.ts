@@ -15,4 +15,11 @@ export const appRoutes: Route[] = [
                 (c) => c.FilmPageComponent,
             ),
     },
+    {
+        path: 'profile',
+        loadComponent: () =>
+            import('./pages/profile-page/profile-page.component').then(
+                (c) => c.ProfilePageComponent,
+            ),
+    },
 ];
