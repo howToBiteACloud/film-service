@@ -4,7 +4,15 @@
 <header class="header">
     <span class="tui-text_h1">Kinoha</span>
     <div class="navigation">
-        <a appearance="action" tuiButton routerLink="/" size="m"> Фильмы </a>
+        <a
+            class="tui-text_body-m"
+            appearance="action"
+            tuiButton
+            routerLink="/"
+            size="m"
+        >
+            Фильмы
+        </a>
 
         @if (accountLoading) {
             <tui-avatar size="m" [tuiSkeleton]="true" />

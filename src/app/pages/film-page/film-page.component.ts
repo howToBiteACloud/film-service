@@ -7,7 +7,14 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TuiMapperPipe, TuiRepeatTimesPipe } from '@taiga-ui/cdk';
-import { TuiBreakpointMediaKey, TuiBreakpointService } from '@taiga-ui/core';
+import {
+    TuiBreakpointMediaKey,
+    TuiBreakpointService,
+    TuiButton,
+    TuiHint,
+    TuiHintDirective,
+    TuiIcon,
+} from '@taiga-ui/core';
 import { TuiSkeleton } from '@taiga-ui/kit';
 import { map } from 'rxjs/operators';
 
@@ -17,6 +24,7 @@ import {
     PosterComponent,
 } from '../../components';
 import { FilmData } from '../../models';
+import { AuthorizationService } from '../../shared/services/authorization.service';
 import { FilmActorsComponent } from './film-actors/film-actors.component';
 import { FilmInfoComponent } from './film-info/film-info.component';
 import { FilmService } from './film-service/film.service';
@@ -36,6 +44,10 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
         TuiSkeleton,
         TuiRepeatTimesPipe,
         CarouselComponent,
+        TuiButton,
+        TuiIcon,
+        TuiHint,
+        TuiHintDirective,
     ],
     templateUrl: './film-page.component.html',
     styleUrl: './film-page.component.less',
@@ -44,6 +56,7 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
 })
 export class FilmPageComponent implements OnInit {
     private readonly filmService = inject(FilmService);
+    private readonly authorizationService = inject(AuthorizationService);
     private readonly activatedRoute = inject(ActivatedRoute);
     private readonly breakpoint$ = inject(TuiBreakpointService);
 
@@ -52,6 +65,7 @@ export class FilmPageComponent implements OnInit {
             media === 'mobile' ? 3 : 5,
         ),
     );
+    readonly account$ = this.authorizationService.account$;
 
     readonly filmId$ = this.activatedRoute.paramMap.pipe(
         map((paramMap) => paramMap.get('filmId')),
@@ -74,5 +88,13 @@ export class FilmPageComponent implements OnInit {
 
     getRecommendations(film: FilmData) {
         return film.recommendations.results;
+    }
+
+    toggleFavorite(accountId: number, filmId: number, favorite: boolean) {
+        this.filmService.changeFavoriteFilm(accountId, filmId, favorite);
+    }
+
+    toggleWatchlist(accountId: number, filmId: number, favorite: boolean) {
+        this.filmService.changeWatchlistFilm(accountId, filmId, favorite);
     }
 }

@@ -42,4 +42,9 @@ export type FilmData = CommonFilmData &
         credits: CreditsResponse;
         videos: FilmVideosResponse;
         recommendations: RecommendationsResponse;
+        account_states: Readonly<{
+            favorite: boolean;
+            rated: boolean;
+            watchlist: boolean;
+        }>;
     }>;

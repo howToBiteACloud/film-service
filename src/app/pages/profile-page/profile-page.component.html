@@ -1,1 +1,63 @@
-<p>profile-page works!</p>
+@let account = account$ | async;
+@let accountLoading = accountLoading$ | async;
+@let isLoadingFavorites = isLoadingFavorites$ | async;
+@let isLoadingWatchList = isLoadingWathList$ | async;
+
+<div class="profile-row">
+    @if (accountLoading) {
+        <tui-avatar size="xxl" [tuiSkeleton]="true" />
+        <div class="account-info">
+            <div tuiSkeleton="Thistextwillbereplacedby"></div>
+            <div tuiSkeleton="Thistextwillbereplacedby"></div>
+            <div tuiSkeleton="Thistextwillbereplacedby"></div>
+        </div>
+    } @else if (account) {
+        <tui-avatar
+            class="avatar"
+            size="xxl"
+            [src]="
+                'https://image.tmdb.org/t/p/w500/' +
+                    account.avatar.tmdb.avatar_path
+                    | tuiFallbackSrc: '@tui.user'
+                    | async
+            "
+        />
+        <div class="account-info">
+            <div class="tui-text_h4">
+                {{ account.name }}
+            </div>
+            <div class="tui-text_body-l">
+                {{ account.username }}
+            </div>
+            <div class="tui-text_body-s">ID: {{ account.id }}</div>
+        </div>
+    }
+</div>
+<div class="profile-row profile-row_films">
+    <div
+        class="profile-item-title tui-text_body-m"
+        [tuiSkeleton]="isLoadingFavorites!"
+    >
+        Избранные фильмы:
+    </div>
+    <app-film-cards
+        [films]="(favoriteFilms$ | async)!"
+        [totalPages]="(favoriteTotalPages$ | async)!"
+        [isLoading]="isLoadingFavorites!"
+        (pageChanged)="onFavoritePageChanged($event)"
+    ></app-film-cards>
+</div>
+<div class="profile-row profile-row_films">
+    <div
+        class="profile-item-title tui-text_body-m"
+        [tuiSkeleton]="isLoadingWatchList!"
+    >
+        Буду смотреть:
+    </div>
+    <app-film-cards
+        [films]="(watchList$ | async)!"
+        [totalPages]="(watchListTotalPages$ | async)!"
+        [isLoading]="isLoadingWatchList!"
+        (pageChanged)="onWatchlistPageChanged($event)"
+    ></app-film-cards>
+</div>

@@ -1,7 +1,3 @@
-@let films = films$ | async;
-@let totalPages = totalPages$ | async;
-@let isLoading = isLoading$ | async;
-
 @if (isLoading) {
     <div class="film-list-wrapper">
         @for (index of 20 | tuiRepeatTimes; track index) {
@@ -20,9 +16,12 @@
             <app-film-card class="film-card" [data]="film"></app-film-card>
         }
     </div>
-    <tui-pagination
-        [index]="index"
-        [length]="totalPages || 0"
-        (indexChange)="pageChanged($event)"
-    />
+    @if (totalPages > 1) {
+        <tui-pagination
+            class="tui-space_top-4"
+            [index]="index"
+            [length]="totalPages"
+            (indexChange)="onPageChanged($event)"
+        />
+    }
 }

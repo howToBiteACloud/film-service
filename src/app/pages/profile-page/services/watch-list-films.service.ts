@@ -1,36 +1,31 @@
-import { inject, Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, combineLatest, NEVER, Subject } from 'rxjs';
-import { catchError, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { DestroyRef, inject, Injectable } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject, combineLatest, NEVER } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { TmdbApiService } from '../../../apis/tmdb-api.service';
-import {
-    FilmListFilters,
-    FilmsResponse,
-    RequestState,
-    RequestStatus,
-} from '../../../models';
+import { FilmsResponse, RequestState, RequestStatus } from '../../../models';
+import { AuthorizationService } from '../../../shared/services/authorization.service';
 import {
     failRequest,
     loadingRequest,
-    noneRequest,
     successRequest,
 } from '../../../shared/utils';
-import { makeFilmParams } from '../helpers';
 
-@Injectable()
-export class FilmListService implements OnDestroy {
+@Injectable({
+    providedIn: 'root',
+})
+export class WatchListFilmsService {
+    private readonly destroyRef = inject(DestroyRef);
     private readonly tmdbApiService = inject(TmdbApiService);
-
-    private readonly destroy$ = new Subject<void>();
+    private readonly authorizationService = inject(AuthorizationService);
 
     private readonly currentPage$ = new BehaviorSubject<number>(1);
-    private readonly currentFilters$ = new BehaviorSubject<FilmListFilters>({});
-
     private readonly state$ = new BehaviorSubject<RequestState<FilmsResponse>>(
-        noneRequest(),
+        loadingRequest(),
     );
 
-    readonly films$ = this.state$.pipe(
+    readonly watchList$ = this.state$.pipe(
         map((state) => state.value?.results ?? []),
     );
 
@@ -38,16 +33,9 @@ export class FilmListService implements OnDestroy {
         map((state) => state.status === RequestStatus.Loading),
     );
 
-    readonly genres$ = this.tmdbApiService.getGenres();
-
     readonly totalPages$ = this.state$.pipe(
         map((state) => state.value?.total_pages),
     );
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
 
     initialize() {
         this.loadFilmsEffect();
@@ -57,27 +45,27 @@ export class FilmListService implements OnDestroy {
         this.currentPage$.next(pageNumber);
     }
 
-    controlsChange(controls: FilmListFilters) {
-        this.currentFilters$.next(controls);
-    }
-
     private loadFilmsEffect() {
-        combineLatest({
-            page: this.currentPage$,
-            filters: this.currentFilters$,
-        })
+        const sessionId = this.authorizationService.getSessionId()!;
+
+        combineLatest([this.currentPage$, this.authorizationService.account$])
             .pipe(
-                map(({ page, filters }) => makeFilmParams(page, filters)),
                 tap(() => {
                     this.state$.next(loadingRequest());
                 }),
-                switchMap((params) => this.tmdbApiService.getFilms(params)),
+                switchMap(([page, account]) =>
+                    this.tmdbApiService.getWatchList(
+                        page,
+                        account!.id,
+                        sessionId,
+                    ),
+                ),
                 catchError((error) => {
                     this.state$.next(failRequest(error));
 
                     return NEVER;
                 }),
-                takeUntil(this.destroy$),
+                takeUntilDestroyed(this.destroyRef),
             )
             .subscribe((response) => {
                 this.state$.next(successRequest(response));

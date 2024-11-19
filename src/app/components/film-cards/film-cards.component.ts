@@ -1,12 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+} from '@angular/core';
 import { TuiRepeatTimesPipe } from '@taiga-ui/cdk';
 import { TuiPagination } from '@taiga-ui/kit';
 import { TuiSkeleton } from '@taiga-ui/kit';
 import { TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import { FilmData } from 'src/app/models';
 
-import { FilmCardComponent } from '../../../components/film-card/film-card.component';
-import { FilmListService } from '../film-list-service/film-list.service';
+import { FilmCardComponent } from '../film-card/film-card.component';
 
 @Component({
     selector: 'app-film-cards',
@@ -24,15 +30,16 @@ import { FilmListService } from '../film-list-service/film-list.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilmCardsComponent {
-    private readonly filmListService = inject(FilmListService);
-    readonly films$ = this.filmListService.films$;
-    readonly totalPages$ = this.filmListService.totalPages$;
-    readonly isLoading$ = this.filmListService.isLoading$;
+    @Input({ required: true }) films: FilmData[] = [];
+    @Input({ required: true }) totalPages = 0;
+    @Input() isLoading = false;
+
+    @Output() pageChanged = new EventEmitter<number>();
 
     index = 0;
 
-    protected pageChanged(index: number): void {
+    protected onPageChanged(index: number): void {
         this.index = index;
-        this.filmListService.pageChange(index + 1);
+        this.pageChanged.emit(index + 1);
     }
 }

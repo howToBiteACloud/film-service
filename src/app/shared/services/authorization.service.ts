@@ -1,6 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, interval, Observable, of } from 'rxjs';
-import { catchError, filter, switchMap, takeWhile, tap } from 'rxjs/operators';
+import {
+    catchError,
+    filter,
+    shareReplay,
+    switchMap,
+    takeWhile,
+    tap,
+} from 'rxjs/operators';
 
 import { TmdbApiService } from '../../apis/tmdb-api.service';
 import { EncryptionService } from './encryption.service';
@@ -27,8 +34,12 @@ export class AuthorizationService {
             this.logout();
             return of(null);
         }),
-        tap(() => {
+        tap((res) => {
             this.accountLoading$.next(false);
+        }),
+        shareReplay({
+            refCount: true,
+            bufferSize: 1,
         }),
     );
 

@@ -1,6 +1,7 @@
 @let film = film$ | async;
 @let isLoading = isLoading$ | async;
 @let visibleItemsCount = (visibleItemsCount$ | async)!;
+@let account = account$ | async;
 
 @if (!isLoading && film) {
     <div class="film-row">
@@ -15,6 +16,48 @@
         <app-film-info [film]="film"></app-film-info>
         <app-film-actors [actors]="film.credits.cast"></app-film-actors>
     </div>
+    @if (account) {
+        <div class="film-row">
+            <div>
+                @let favorite = film.account_states?.favorite;
+                @let willWatch = film.account_states?.watchlist;
+                <button
+                    class="icon-button tui-space_right-2"
+                    tuiButton
+                    appearance="neutral"
+                    tuiHintAppearance="dark"
+                    tuiHintDirection="bottom"
+                    tuiHint="Буду смотреть"
+                    (click)="toggleWatchlist(account!.id, film.id, !willWatch)"
+                >
+                    <tui-icon
+                        [icon]="
+                            willWatch ? '@tui.bookmark-check' : '@tui.bookmark'
+                        "
+                        [style.color]="willWatch ? 'red' : 'inherit'"
+                    ></tui-icon>
+                </button>
+                <button
+                    class="icon-button"
+                    tuiButton
+                    appearance="neutral"
+                    tuiHintAppearance="dark"
+                    tuiHintDirection="bottom"
+                    [tuiHint]="
+                        favorite
+                            ? 'Удалить из избранного'
+                            : 'Добавить в избранное'
+                    "
+                    (click)="toggleFavorite(account!.id, film.id, !favorite)"
+                >
+                    <tui-icon
+                        [icon]="favorite ? '@tui.heart-filled' : '@tui.heart'"
+                        [style.color]="favorite ? 'red' : 'inherit'"
+                    ></tui-icon>
+                </button>
+            </div>
+        </div>
+    }
     <div class="film-row">
         @let trailer = film | tuiMapper: getTrailer;
         @if (trailer) {
