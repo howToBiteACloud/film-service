@@ -18,6 +18,7 @@ import { EncryptionService } from './encryption.service';
 export class AuthorizationService {
     private readonly tmdbApiService = inject(TmdbApiService);
     private readonly encryptionService = inject(EncryptionService);
+
     private readonly sessionIdKey = 'sessionId';
 
     readonly accountLoading$ = new BehaviorSubject<boolean>(false);
@@ -34,7 +35,7 @@ export class AuthorizationService {
             this.logout();
             return of(null);
         }),
-        tap((res) => {
+        tap(() => {
             this.accountLoading$.next(false);
         }),
         shareReplay({

@@ -1,12 +1,13 @@
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
 import {
     HTTP_INTERCEPTORS,
     provideHttpClient,
     withInterceptorsFromDi,
 } from '@angular/common/http';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
 import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
+
 import { appRoutes } from './app.routes';
 import { TmdbTokenInterseptor } from './interseptors/tmdb-token-interseptor';
 

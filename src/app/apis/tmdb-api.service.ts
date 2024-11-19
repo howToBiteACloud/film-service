@@ -176,4 +176,28 @@ export class TmdbApiService {
             },
         );
     }
+
+    changeFilmRate(rate: number, filmId: number, session_id: string) {
+        return this.httpClient.post<FilmData>(
+            host + `/movie/${filmId}/rating`,
+            { value: rate },
+            {
+                params: {
+                    language,
+                    session_id,
+                },
+            },
+        );
+    }
+
+    deleteFilmRate(filmId: number, session_id: string) {
+        return this.httpClient.delete<FilmData>(
+            host + `/movie/${filmId}/rating`,
+            {
+                params: {
+                    session_id,
+                },
+            },
+        );
+    }
 }

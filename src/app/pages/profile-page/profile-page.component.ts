@@ -5,12 +5,15 @@ import {
     inject,
     OnInit,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { TuiFallbackSrcPipe } from '@taiga-ui/core';
 import { TuiAvatar, TuiSkeleton } from '@taiga-ui/kit';
+import { filter } from 'rxjs/operators';
 
 import { FilmCardsComponent } from '../../components/film-cards/film-cards.component';
 import { AuthorizationService } from './../../shared/services/authorization.service';
 import { FavoriteFilmsService } from './services/favorite-films.service';
+import { RatedFilmsService } from './services/rated-films.service';
 import { WatchListFilmsService } from './services/watch-list-films.service';
 
 @Component({
@@ -26,12 +29,13 @@ import { WatchListFilmsService } from './services/watch-list-films.service';
     templateUrl: './profile-page.component.html',
     styleUrl: './profile-page.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [FavoriteFilmsService, WatchListFilmsService],
+    providers: [FavoriteFilmsService, WatchListFilmsService, RatedFilmsService],
 })
 export class ProfilePageComponent implements OnInit {
     private readonly authorizationService = inject(AuthorizationService);
     private readonly favoriteFilmsService = inject(FavoriteFilmsService);
     private readonly watchListFilmsService = inject(WatchListFilmsService);
+    private readonly router = inject(Router);
 
     readonly account$ = this.authorizationService.account$;
     readonly accountLoading$ = this.authorizationService.accountLoading$;
@@ -45,6 +49,14 @@ export class ProfilePageComponent implements OnInit {
     ngOnInit() {
         this.favoriteFilmsService.initialize();
         this.watchListFilmsService.initialize();
+
+        this.account$
+            .pipe(
+                filter((account) => {
+                    return !account;
+                }),
+            )
+            .subscribe(() => this.router.navigate(['/']));
     }
 
     onWatchlistPageChanged(pageNumber: number) {

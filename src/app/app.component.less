@@ -2,14 +2,21 @@
 
 :host {
     display: block;
+    height: 100%;
+}
+
+.app-root {
+    height: 100%;
 }
 
 .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
     background-color: var(--tui-background-neutral-2);
 }
 
 .page-container {
-    background-color: var(--tui-background-base-alt);
     width: 76%;
     margin: auto;
     box-sizing: border-box;
@@ -17,6 +24,5 @@
     @media @tui-tablet {
         margin: 0;
         width: 100%;
-        padding-top: 20px;
     }
 }

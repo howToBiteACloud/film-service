@@ -1,5 +1,7 @@
 import { Route } from '@angular/router';
 
+import { AuthorizationGuard } from './guards/authorization.guard';
+
 export const appRoutes: Route[] = [
     {
         path: '',
@@ -20,6 +22,14 @@ export const appRoutes: Route[] = [
         loadComponent: () =>
             import('./pages/profile-page/profile-page.component').then(
                 (c) => c.ProfilePageComponent,
+            ),
+        canActivate: [AuthorizationGuard],
+    },
+    {
+        path: '**',
+        loadComponent: () =>
+            import('./pages/not-found-page/not-found-page.component').then(
+                (c) => c.NotFoundPageComponent,
             ),
     },
 ];

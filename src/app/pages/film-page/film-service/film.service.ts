@@ -9,7 +9,12 @@ import {
 } from 'rxjs';
 
 import { TmdbApiService } from '../../../apis/tmdb-api.service';
-import { FilmData, RequestState, RequestStatus } from '../../../models';
+import {
+    AccountStates,
+    FilmData,
+    RequestState,
+    RequestStatus,
+} from '../../../models';
 import { AuthorizationService } from '../../../shared/services/authorization.service';
 import {
     failRequest,
@@ -64,17 +69,9 @@ export class FilmService implements OnDestroy {
                 this.authorizationService.getSessionId() ?? '',
             )
             .subscribe(() => {
-                const oldValue = this.state$.value.value!;
-
-                const newValue = {
-                    ...oldValue,
-                    account_states: {
-                        ...oldValue?.account_states,
-                        favorite,
-                    },
-                };
-
-                this.state$.next(successRequest(newValue));
+                this.updateAccountStates({
+                    favorite,
+                });
             });
     }
 
@@ -87,17 +84,50 @@ export class FilmService implements OnDestroy {
                 this.authorizationService.getSessionId() ?? '',
             )
             .subscribe(() => {
-                const oldValue = this.state$.value.value!;
-
-                const newValue = {
-                    ...oldValue,
-                    account_states: {
-                        ...oldValue?.account_states,
-                        watchlist,
-                    },
-                };
-
-                this.state$.next(successRequest(newValue));
+                this.updateAccountStates({
+                    watchlist,
+                });
             });
+    }
+
+    changeFilmRate(rate: number, filmId: number) {
+        this.tmdbApiService
+            .changeFilmRate(
+                rate,
+                filmId,
+                this.authorizationService.getSessionId() ?? '',
+            )
+            .subscribe(() => {
+                this.updateAccountStates({
+                    watchlist: false,
+                    rated: { value: rate },
+                });
+            });
+    }
+
+    deleteFilmRate(filmId: number) {
+        this.tmdbApiService
+            .deleteFilmRate(
+                filmId,
+                this.authorizationService.getSessionId() ?? '',
+            )
+            .subscribe(() => {
+                this.updateAccountStates({
+                    rated: false,
+                });
+            });
+    }
+
+    private updateAccountStates(accountState: Partial<AccountStates>) {
+        const oldValue = this.state$.value.value!;
+
+        const newValue = {
+            ...oldValue,
+            account_states: {
+                ...oldValue?.account_states,
+                ...accountState,
+            },
+        };
+        this.state$.next(successRequest(newValue));
     }
 }

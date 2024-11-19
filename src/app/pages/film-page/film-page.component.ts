@@ -5,6 +5,7 @@ import {
     inject,
     OnInit,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TuiMapperPipe, TuiRepeatTimesPipe } from '@taiga-ui/cdk';
 import {
@@ -15,7 +16,7 @@ import {
     TuiHintDirective,
     TuiIcon,
 } from '@taiga-ui/core';
-import { TuiSkeleton } from '@taiga-ui/kit';
+import { TuiRating, TuiSkeleton } from '@taiga-ui/kit';
 import { map } from 'rxjs/operators';
 
 import {
@@ -48,6 +49,8 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
         TuiIcon,
         TuiHint,
         TuiHintDirective,
+        FormsModule,
+        TuiRating,
     ],
     templateUrl: './film-page.component.html',
     styleUrl: './film-page.component.less',
@@ -74,6 +77,8 @@ export class FilmPageComponent implements OnInit {
     readonly film$ = this.filmService.film$;
     readonly isLoading$ = this.filmService.isLoading$;
 
+    value = 0;
+
     ngOnInit() {
         this.filmId$.subscribe((filmId) => {
             if (filmId) {
@@ -94,7 +99,15 @@ export class FilmPageComponent implements OnInit {
         this.filmService.changeFavoriteFilm(accountId, filmId, favorite);
     }
 
-    toggleWatchlist(accountId: number, filmId: number, favorite: boolean) {
-        this.filmService.changeWatchlistFilm(accountId, filmId, favorite);
+    toggleWatchlist(accountId: number, filmId: number, watchList: boolean) {
+        this.filmService.changeWatchlistFilm(accountId, filmId, watchList);
+    }
+
+    changeFilmRate(rate: number, filmId: number) {
+        this.filmService.changeFilmRate(rate, filmId);
+    }
+
+    deleteFilmRate(filmId: number) {
+        this.filmService.deleteFilmRate(filmId);
     }
 }
