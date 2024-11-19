@@ -12,6 +12,7 @@ import { TuiAvatar, TuiSkeleton } from '@taiga-ui/kit';
 
 import { AuthorizationService } from '../../shared/services/authorization.service';
 import { AccountButtonComponent } from './account-button/account-button.component';
+import { FilmSearchComponent } from './film-search/film-search.component';
 
 @Component({
     selector: 'app-header',
@@ -23,6 +24,7 @@ import { AccountButtonComponent } from './account-button/account-button.componen
         TuiButton,
         TuiSkeleton,
         TuiAvatar,
+        FilmSearchComponent,
     ],
     templateUrl: './header.component.html',
     styleUrl: './header.component.less',

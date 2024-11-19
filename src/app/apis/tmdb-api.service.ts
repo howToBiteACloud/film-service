@@ -200,4 +200,14 @@ export class TmdbApiService {
             },
         );
     }
+
+    getFilmsByName(value: string): Observable<FilmsResponse> {
+        return this.httpClient.get<FilmsResponse>(host + '/search/movie', {
+            params: {
+                page: 1,
+                language,
+                query: value,
+            },
+        });
+    }
 }

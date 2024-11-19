@@ -6,7 +6,7 @@ import {
     Input,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TUI_DEFAULT_MATCHER, tuiPure } from '@taiga-ui/cdk';
+import { tuiPure } from '@taiga-ui/cdk';
 import { TuiDataList } from '@taiga-ui/core';
 import { TuiDataListWrapper, TuiStringifyContentPipe } from '@taiga-ui/kit';
 import {

@@ -1,16 +1,37 @@
 @import '@taiga-ui/core/styles/taiga-ui-local.less';
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: 'logo search search nav';
     padding: 0 16px;
     background-color: var(--tui-background-neutral-1-pressed);
     color: var(--tui-text-primary);
+
+    @media @tui-mobile {
+        grid-template-areas:
+            'logo logo nav nav'
+            'search search search search';
+    }
+}
+
+.logo {
+    grid-area: logo;
+}
+
+.search {
+    grid-area: search;
+    margin: auto 0;
+
+    @media @tui-mobile {
+        margin-bottom: 8px;
+    }
 }
 
 .navigation {
+    grid-area: nav;
     display: flex;
+    justify-content: flex-end;
     align-items: center;
 }
 

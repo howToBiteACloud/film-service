@@ -26,26 +26,33 @@
     <div class="film-row">
         @let trailer = film | tuiMapper: getTrailer;
         @if (trailer) {
-            <app-film-trailer [video]="trailer"></app-film-trailer>
+            <div class="trailer-block">
+                <app-film-trailer [video]="trailer"></app-film-trailer>
+            </div>
         }
-        <div class="synopsis">{{ film.overview }}</div>
+        @if (film.overview) {
+            <div class="synopsis">{{ film.overview }}</div>
+        }
     </div>
-    <div class="film-row film-row_recommendation">
-        <div class="recommendations-title tui-text_h6">Смотрите также:</div>
-        <div class="film-recommendations">
-            <app-carousel
-                [gapSize]="4"
-                [countElements]="(visibleItemsCount$ | async)!"
-            >
-                @for (
-                    recommendation of film | tuiMapper: getRecommendations;
-                    track recommendation.id
-                ) {
-                    <app-film-card [data]="recommendation"></app-film-card>
-                }
-            </app-carousel>
+    @let recommendations = film | tuiMapper: getRecommendations;
+    @if (recommendations.length) {
+        <div class="film-row film-row_recommendation">
+            <div class="recommendations-title tui-text_h6">Смотрите также:</div>
+            <div class="film-recommendations">
+                <app-carousel
+                    [gapSize]="4"
+                    [countElements]="(visibleItemsCount$ | async)!"
+                >
+                    @for (
+                        recommendation of recommendations;
+                        track recommendation.id
+                    ) {
+                        <app-film-card [data]="recommendation"></app-film-card>
+                    }
+                </app-carousel>
+            </div>
         </div>
-    </div>
+    }
 } @else {
     <div class="film-row">
         <div class="poster-skeleton" [tuiSkeleton]="true"></div>

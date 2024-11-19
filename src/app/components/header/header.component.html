@@ -2,7 +2,10 @@
 @let accountLoading = accountLoading$ | async;
 
 <header class="header">
-    <span class="tui-text_h1">Kinoha</span>
+    <span class="logo tui-text_h1">Kinoha</span>
+    <div class="search">
+        <app-film-search></app-film-search>
+    </div>
     <div class="navigation">
         <a
             class="tui-text_body-m"
@@ -13,7 +16,6 @@
         >
             Фильмы
         </a>
-
         @if (accountLoading) {
             <tui-avatar size="m" [tuiSkeleton]="true" />
         } @else {

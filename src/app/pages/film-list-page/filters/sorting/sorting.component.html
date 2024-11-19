@@ -1,0 +1,28 @@
+<h3>Сортировать по</h3>
+<label tuiLabel>
+    <input
+        tuiRadio
+        type="radio"
+        value="popularity.desc"
+        [formControl]="control"
+    />
+    По популярности
+</label>
+<label class="tui-space_top-2" tuiLabel>
+    <input
+        tuiRadio
+        type="radio"
+        value="vote_count.desc"
+        [formControl]="control"
+    />
+    По количеству оценок
+</label>
+<label class="tui-space_top-2" tuiLabel>
+    <input
+        tuiRadio
+        type="radio"
+        value="primary_release_date.desc"
+        [formControl]="control"
+    />
+    Сначала новые
+</label>
