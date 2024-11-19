@@ -124,9 +124,9 @@ export class FilmService implements OnDestroy {
         const newValue = {
             ...oldValue,
             account_states: {
-                ...oldValue?.account_states,
+                ...(oldValue?.account_states ?? {}),
                 ...accountState,
-            },
+            } as AccountStates,
         };
         this.state$.next(successRequest(newValue));
     }

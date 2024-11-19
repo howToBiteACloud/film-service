@@ -45,6 +45,8 @@ export class GenresFilterComponent {
 
     @tuiPure
     protected filter(search: string | null, genres: Genre[]): readonly Genre[] {
-        return genres.filter((item) => TUI_DEFAULT_MATCHER(item, search || ''));
+        return genres.filter((item: Genre) =>
+            search ? item.name.includes(search) : true,
+        );
     }
 }

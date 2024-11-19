@@ -1,12 +1,14 @@
 @import '@taiga-ui/core/styles/taiga-ui-local.less';
 
 .skeleton-card {
-    width: 140px;
-    height: 210px;
+    aspect-ratio: 2 / 3;
 }
 
 .skeleton-title {
-    width: 140px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 .film-list-wrapper {
@@ -24,6 +26,7 @@ tui-pagination ::ng-deep .t-button {
     width: 140px;
 
     @media @tui-mobile {
-        width: calc(50% - 8px);
+        --count: 3;
+        width: calc((100% - (16px * (var(--count) - 1))) / var(--count));
     }
 }

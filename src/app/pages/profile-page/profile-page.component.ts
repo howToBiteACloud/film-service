@@ -35,6 +35,7 @@ export class ProfilePageComponent implements OnInit {
     private readonly authorizationService = inject(AuthorizationService);
     private readonly favoriteFilmsService = inject(FavoriteFilmsService);
     private readonly watchListFilmsService = inject(WatchListFilmsService);
+    private readonly ratedFilmsService = inject(RatedFilmsService);
     private readonly router = inject(Router);
 
     readonly account$ = this.authorizationService.account$;
@@ -45,10 +46,14 @@ export class ProfilePageComponent implements OnInit {
     readonly favoriteTotalPages$ = this.favoriteFilmsService.totalPages$;
     readonly isLoadingFavorites$ = this.favoriteFilmsService.isLoading$;
     readonly isLoadingWathList$ = this.watchListFilmsService.isLoading$;
+    readonly ratedFilms$ = this.ratedFilmsService.ratedFilms$;
+    readonly ratedTotalPages$ = this.ratedFilmsService.totalPages$;
+    readonly isLoadingRated$ = this.ratedFilmsService.isLoading$;
 
     ngOnInit() {
         this.favoriteFilmsService.initialize();
         this.watchListFilmsService.initialize();
+        this.ratedFilmsService.initialize();
 
         this.account$
             .pipe(
@@ -65,5 +70,9 @@ export class ProfilePageComponent implements OnInit {
 
     onFavoritePageChanged(pageNumber: number) {
         this.favoriteFilmsService.pageChange(pageNumber);
+    }
+
+    onRatedPageChanged(pageNumber: number) {
+        this.ratedFilmsService.pageChange(pageNumber);
     }
 }

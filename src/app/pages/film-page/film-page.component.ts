@@ -5,18 +5,10 @@ import {
     inject,
     OnInit,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TuiMapperPipe, TuiRepeatTimesPipe } from '@taiga-ui/cdk';
-import {
-    TuiBreakpointMediaKey,
-    TuiBreakpointService,
-    TuiButton,
-    TuiHint,
-    TuiHintDirective,
-    TuiIcon,
-} from '@taiga-ui/core';
-import { TuiRating, TuiSkeleton } from '@taiga-ui/kit';
+import { TuiBreakpointMediaKey, TuiBreakpointService } from '@taiga-ui/core';
+import { TuiSkeleton } from '@taiga-ui/kit';
 import { map } from 'rxjs/operators';
 
 import {
@@ -26,6 +18,7 @@ import {
 } from '../../components';
 import { FilmData } from '../../models';
 import { AuthorizationService } from '../../shared/services/authorization.service';
+import { FilmActionsComponent } from './film-actions/film-actions.component';
 import { FilmActorsComponent } from './film-actors/film-actors.component';
 import { FilmInfoComponent } from './film-info/film-info.component';
 import { FilmService } from './film-service/film.service';
@@ -45,12 +38,7 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
         TuiSkeleton,
         TuiRepeatTimesPipe,
         CarouselComponent,
-        TuiButton,
-        TuiIcon,
-        TuiHint,
-        TuiHintDirective,
-        FormsModule,
-        TuiRating,
+        FilmActionsComponent,
     ],
     templateUrl: './film-page.component.html',
     styleUrl: './film-page.component.less',
@@ -76,8 +64,6 @@ export class FilmPageComponent implements OnInit {
 
     readonly film$ = this.filmService.film$;
     readonly isLoading$ = this.filmService.isLoading$;
-
-    value = 0;
 
     ngOnInit() {
         this.filmId$.subscribe((filmId) => {

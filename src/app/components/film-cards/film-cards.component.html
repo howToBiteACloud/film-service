@@ -1,11 +1,11 @@
 @if (isLoading) {
     <div class="film-list-wrapper">
         @for (index of 20 | tuiRepeatTimes; track index) {
-            <div>
+            <div class="film-card">
                 <div class="skeleton-card" [tuiSkeleton]="true"></div>
                 <div
                     class="skeleton-title"
-                    tuiSkeleton="Thistextwillbereplacedby a skeleton"
+                    tuiSkeleton="This text will be replaced by a skeleton"
                 ></div>
             </div>
         }

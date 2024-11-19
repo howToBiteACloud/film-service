@@ -2,6 +2,7 @@
 @let accountLoading = accountLoading$ | async;
 @let isLoadingFavorites = isLoadingFavorites$ | async;
 @let isLoadingWatchList = isLoadingWathList$ | async;
+@let isLoadingRated = isLoadingRated$ | async;
 
 <div class="profile-row">
     @if (accountLoading) {
@@ -59,5 +60,19 @@
         [totalPages]="(watchListTotalPages$ | async)!"
         [isLoading]="isLoadingWatchList!"
         (pageChanged)="onWatchlistPageChanged($event)"
+    ></app-film-cards>
+</div>
+<div class="profile-row profile-row_films">
+    <div
+        class="profile-item-title tui-text_body-m"
+        [tuiSkeleton]="isLoadingWatchList!"
+    >
+        Оценки фильмов:
+    </div>
+    <app-film-cards
+        [films]="(ratedFilms$ | async)!"
+        [totalPages]="(ratedTotalPages$ | async)!"
+        [isLoading]="isLoadingRated!"
+        (pageChanged)="onRatedPageChanged($event)"
     ></app-film-cards>
 </div>

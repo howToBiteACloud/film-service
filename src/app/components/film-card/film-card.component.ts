@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TuiLineClamp } from '@taiga-ui/kit';
+import { TuiChip, TuiLineClamp } from '@taiga-ui/kit';
 
 import { CommonFilmData } from '../../models';
 import { PosterComponent } from '..';
@@ -8,7 +8,7 @@ import { PosterComponent } from '..';
 @Component({
     selector: 'app-film-card',
     standalone: true,
-    imports: [TuiLineClamp, RouterLink, PosterComponent],
+    imports: [TuiLineClamp, RouterLink, PosterComponent, TuiChip],
     templateUrl: './film-card.component.html',
     styleUrl: './film-card.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
