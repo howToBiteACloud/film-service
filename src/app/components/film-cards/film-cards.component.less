@@ -1,5 +1,10 @@
 @import '@taiga-ui/core/styles/taiga-ui-local.less';
 
+:host {
+    display: block;
+    width: 100%;
+}
+
 .skeleton-card {
     aspect-ratio: 2 / 3;
 }
@@ -29,4 +34,11 @@ tui-pagination ::ng-deep .t-button {
         --count: 3;
         width: calc((100% - (16px * (var(--count) - 1))) / var(--count));
     }
+}
+
+.empty-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }

@@ -10,7 +10,7 @@
             </div>
         }
     </div>
-} @else {
+} @else if (films.length > 0) {
     <div class="film-list-wrapper">
         @for (film of films; track film.id) {
             <app-film-card class="film-card" [data]="film"></app-film-card>
@@ -24,4 +24,8 @@
             (indexChange)="onPageChanged($event)"
         />
     }
+} @else {
+    <div class="empty-block">
+        <span class="tui-text_h4">Пока ничего нет</span>
+    </div>
 }
