@@ -7,7 +7,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { Genre } from '../../../models';
-import { FilmListService } from '../film-list-service/film-list.service';
+import { FilmListService } from '../services/film-list.service';
 import { DateFilterComponent } from './date-filter/date-filter.component';
 import { GenresFilterComponent } from './genres-filter/genres-filter.component';
 import { SortingComponent } from './sorting/sorting.component';

@@ -21,7 +21,7 @@ import { AuthorizationService } from '../../shared/services/authorization.servic
 import { FilmActionsComponent } from './film-actions/film-actions.component';
 import { FilmActorsComponent } from './film-actors/film-actors.component';
 import { FilmInfoComponent } from './film-info/film-info.component';
-import { FilmService } from './film-service/film.service';
+import { FilmService } from './services/film.service';
 import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
 
 @Component({

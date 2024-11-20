@@ -10,7 +10,7 @@ import { TuiButton, TuiHint, TuiHintDirective, TuiIcon } from '@taiga-ui/core';
 import { TuiRating } from '@taiga-ui/kit';
 
 import { AccountData, FilmData } from '../../../models';
-import { FilmService } from '../film-service/film.service';
+import { FilmService } from '../services/film.service';
 
 @Component({
     selector: 'app-film-actions',

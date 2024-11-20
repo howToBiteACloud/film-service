@@ -15,7 +15,7 @@ import {
 } from '@taiga-ui/legacy';
 
 import { Genre } from '../../../../models';
-import { FilmListService } from '../../film-list-service/film-list.service';
+import { FilmListService } from '../../services/film-list.service';
 
 @Component({
     selector: 'app-genres-filter',

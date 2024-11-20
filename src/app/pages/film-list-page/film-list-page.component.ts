@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { FilmCardsComponent } from '../../components/film-cards/film-cards.component';
-import { FilmListService } from './film-list-service/film-list.service';
+import { FilmListService } from './services/film-list.service';
 import { FiltersComponent } from './filters/filters.component';
 
 @Component({
