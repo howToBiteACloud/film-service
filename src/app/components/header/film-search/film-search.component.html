@@ -1,0 +1,49 @@
+<tui-input
+    tuiTextfieldIcon="@tui.search"
+    tuiTextfieldSize="m"
+    tuiDropdownLimitWidth="fixed"
+    [tuiTextfieldLabelOutside]="true"
+    [tuiDropdown]="content"
+    [tuiDropdownManual]="open"
+    [formControl]="control"
+    (tuiActiveZoneChange)="onActiveZone($event)"
+>
+    Поиск фильмов
+    <input placeholder="Поиск фильмов" tuiTextfieldLegacy />
+</tui-input>
+<ng-template #content>
+    @let films = films$ | async;
+    @let isLoading = (isLoading$ | async)!;
+
+    @if (isLoading) {
+        <div class="status-block">
+            <tui-loader
+                class="loader"
+                [inheritColor]="true"
+                [overlay]="true"
+                [showLoader]="true"
+            ></tui-loader>
+        </div>
+    } @else if (films && films.length > 0) {
+        @for (film of films; track film.id) {
+            <a
+                class="search-film-item"
+                [routerLink]="'/film/' + film.id"
+                (click)="onClickItem()"
+            >
+                <app-poster
+                    class="search-film-item__poster"
+                    [alt]="film.title"
+                    [path]="film.poster_path"
+                >
+                </app-poster>
+                <div class="search-film-item__info">
+                    <div class="tui-text_body-l">{{ film.title }}</div>
+                    <div>{{ film.release_date | date: 'YYYY' }}</div>
+                </div>
+            </a>
+        }
+    } @else {
+        <div class="status-block">По вашему запросу ничего не найдено</div>
+    }
+</ng-template>

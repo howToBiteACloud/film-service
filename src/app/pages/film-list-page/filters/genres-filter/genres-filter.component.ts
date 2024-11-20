@@ -6,7 +6,7 @@ import {
     Input,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TUI_DEFAULT_MATCHER, tuiPure } from '@taiga-ui/cdk';
+import { tuiPure } from '@taiga-ui/cdk';
 import { TuiDataList } from '@taiga-ui/core';
 import { TuiDataListWrapper, TuiStringifyContentPipe } from '@taiga-ui/kit';
 import {
@@ -15,7 +15,7 @@ import {
 } from '@taiga-ui/legacy';
 
 import { Genre } from '../../../../models';
-import { FilmListService } from '../../film-list-service/film-list.service';
+import { FilmListService } from '../../services/film-list.service';
 
 @Component({
     selector: 'app-genres-filter',
@@ -45,6 +45,8 @@ export class GenresFilterComponent {
 
     @tuiPure
     protected filter(search: string | null, genres: Genre[]): readonly Genre[] {
-        return genres.filter((item) => TUI_DEFAULT_MATCHER(item, search || ''));
+        return genres.filter((item: Genre) =>
+            search ? item.name.includes(search) : true,
+        );
     }
 }

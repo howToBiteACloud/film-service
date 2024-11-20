@@ -1,4 +1,4 @@
-import { RequestState, RequestStatus } from '../../../models';
+import { RequestState, RequestStatus } from '../../models';
 
 export function noneRequest<T>(defaultValue: T | null = null): RequestState<T> {
     return {

@@ -34,11 +34,4 @@ export class FilmInfoComponent {
 
         return director?.name ?? '';
     }
-
-    getReleaseDate(film: FilmData): string {
-        const formatDate = film.release_date.split('-');
-        const releaseDate =
-            formatDate[2] + '.' + formatDate[1] + '.' + formatDate[0];
-        return releaseDate;
-    }
 }

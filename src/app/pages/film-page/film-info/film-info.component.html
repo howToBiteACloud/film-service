@@ -27,7 +27,7 @@
     <div class="film-info-item">
         <div class="film-info-title">Год производства:</div>
         <div class="film-info-value">
-            {{ film | tuiMapper: getReleaseDate }}
+            {{ film.release_date | date: 'dd.MM.YYYY' }}
         </div>
     </div>
     <div class="film-info-item">

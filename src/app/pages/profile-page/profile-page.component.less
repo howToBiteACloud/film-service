@@ -1,0 +1,35 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+:host {
+    display: block;
+    padding: 20px 0;
+    background-color: var(--tui-background-base-alt);
+    padding-top: 20px;
+}
+
+.profile-row {
+    display: flex;
+    justify-content: space-around;
+    gap: 16px;
+    padding: 0 24px;
+
+    &_films {
+        flex-direction: column;
+    }
+
+    & + & {
+        margin-top: 40px;
+    }
+
+    @media @tui-mobile {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0;
+    }
+}
+
+.account-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

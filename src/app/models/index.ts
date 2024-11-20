@@ -1,3 +1,4 @@
+export * from './account-data.type';
 export * from './credits-response.type';
 export * from './discover-movie-params.type';
 export * from './film-data.type';
@@ -13,4 +14,5 @@ export * from './recommendation.type';
 export * from './recommendations-response.type';
 export * from './request-state.type';
 export * from './request-status.enum';
+export * from './request-token.type';
 export * from './spoken-language.type';

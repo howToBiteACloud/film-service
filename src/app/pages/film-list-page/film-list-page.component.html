@@ -1,2 +1,7 @@
 <app-filters></app-filters>
-<app-film-cards></app-film-cards>
+<app-film-cards
+    [films]="(films$ | async)!"
+    [isLoading]="(isLoading$ | async)!"
+    [totalPages]="(totalPages$ | async)!"
+    (pageChanged)="onPageChaned($event)"
+></app-film-cards>

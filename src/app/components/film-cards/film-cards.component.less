@@ -1,0 +1,44 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+:host {
+    display: block;
+    width: 100%;
+}
+
+.skeleton-card {
+    aspect-ratio: 2 / 3;
+}
+
+.skeleton-title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.film-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+tui-pagination ::ng-deep .t-button {
+    inline-size: auto;
+    min-width: var(--tui-height-s);
+}
+
+.film-card {
+    width: 140px;
+
+    @media @tui-mobile {
+        --count: 3;
+        width: calc((100% - (16px * (var(--count) - 1))) / var(--count));
+    }
+}
+
+.empty-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}

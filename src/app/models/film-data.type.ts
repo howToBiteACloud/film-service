@@ -21,6 +21,17 @@ export type CommonFilmData = Readonly<{
     video: boolean;
     vote_average: number;
     vote_count: number;
+    rating?: number;
+}>;
+
+export type AccountStates = Readonly<{
+    favorite: boolean;
+    rated:
+        | false
+        | Readonly<{
+              value: number;
+          }>;
+    watchlist: boolean;
 }>;
 
 export type FilmData = CommonFilmData &
@@ -42,4 +53,5 @@ export type FilmData = CommonFilmData &
         credits: CreditsResponse;
         videos: FilmVideosResponse;
         recommendations: RecommendationsResponse;
+        account_states?: AccountStates;
     }>;

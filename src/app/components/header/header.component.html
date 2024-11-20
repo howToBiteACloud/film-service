@@ -1,16 +1,36 @@
-<header class="header">
-    <span class="tui-text_h1">Kinoha</span>
+@let account = account$ | async;
+@let accountLoading = accountLoading$ | async;
 
-    <tui-tabs class="tabs">
+<header class="header">
+    <span class="logo tui-text_h1">Kinoha</span>
+    <div class="search">
+        <app-film-search></app-film-search>
+    </div>
+    <div class="navigation">
         <a
-            tuiTab
+            class="tui-text_body-m"
+            appearance="action"
+            tuiButton
             routerLink="/"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Фильмы</a
+            size="m"
         >
-        <a tuiTab routerLink="/authorization" routerLinkActive="active"
-            >Войти</a
-        >
-    </tui-tabs>
+            Фильмы
+        </a>
+        @if (accountLoading) {
+            <tui-avatar size="m" [tuiSkeleton]="true" />
+        } @else {
+            @if (account) {
+                <app-account-button [account]="account"></app-account-button>
+            } @else {
+                <button
+                    appearance="flat"
+                    tuiButton
+                    type="button"
+                    (click)="openAuthWindow()"
+                >
+                    Войти
+                </button>
+            }
+        }
+    </div>
 </header>

@@ -17,9 +17,11 @@ import {
     PosterComponent,
 } from '../../components';
 import { FilmData } from '../../models';
+import { AuthorizationService } from '../../shared/services/authorization.service';
+import { FilmActionsComponent } from './film-actions/film-actions.component';
 import { FilmActorsComponent } from './film-actors/film-actors.component';
 import { FilmInfoComponent } from './film-info/film-info.component';
-import { FilmService } from './film-service/film.service';
+import { FilmService } from './services/film.service';
 import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
 
 @Component({
@@ -36,6 +38,7 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
         TuiSkeleton,
         TuiRepeatTimesPipe,
         CarouselComponent,
+        FilmActionsComponent,
     ],
     templateUrl: './film-page.component.html',
     styleUrl: './film-page.component.less',
@@ -44,6 +47,7 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
 })
 export class FilmPageComponent implements OnInit {
     private readonly filmService = inject(FilmService);
+    private readonly authorizationService = inject(AuthorizationService);
     private readonly activatedRoute = inject(ActivatedRoute);
     private readonly breakpoint$ = inject(TuiBreakpointService);
 
@@ -52,6 +56,7 @@ export class FilmPageComponent implements OnInit {
             media === 'mobile' ? 3 : 5,
         ),
     );
+    readonly account$ = this.authorizationService.account$;
 
     readonly filmId$ = this.activatedRoute.paramMap.pipe(
         map((paramMap) => paramMap.get('filmId')),
@@ -74,5 +79,21 @@ export class FilmPageComponent implements OnInit {
 
     getRecommendations(film: FilmData) {
         return film.recommendations.results;
+    }
+
+    toggleFavorite(accountId: number, filmId: number, favorite: boolean) {
+        this.filmService.changeFavoriteFilm(accountId, filmId, favorite);
+    }
+
+    toggleWatchlist(accountId: number, filmId: number, watchList: boolean) {
+        this.filmService.changeWatchlistFilm(accountId, filmId, watchList);
+    }
+
+    changeFilmRate(rate: number, filmId: number) {
+        this.filmService.changeFilmRate(rate, filmId);
+    }
+
+    deleteFilmRate(filmId: number) {
+        this.filmService.deleteFilmRate(filmId);
     }
 }

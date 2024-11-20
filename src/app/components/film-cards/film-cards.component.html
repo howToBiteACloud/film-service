@@ -1,28 +1,31 @@
-@let films = films$ | async;
-@let totalPages = totalPages$ | async;
-@let isLoading = isLoading$ | async;
-
 @if (isLoading) {
     <div class="film-list-wrapper">
         @for (index of 20 | tuiRepeatTimes; track index) {
-            <div>
+            <div class="film-card">
                 <div class="skeleton-card" [tuiSkeleton]="true"></div>
                 <div
                     class="skeleton-title"
-                    tuiSkeleton="Thistextwillbereplacedby a skeleton"
+                    tuiSkeleton="This text will be replaced by a skeleton"
                 ></div>
             </div>
         }
     </div>
-} @else {
+} @else if (films.length > 0) {
     <div class="film-list-wrapper">
         @for (film of films; track film.id) {
             <app-film-card class="film-card" [data]="film"></app-film-card>
         }
     </div>
-    <tui-pagination
-        [index]="index"
-        [length]="totalPages || 0"
-        (indexChange)="pageChanged($event)"
-    />
+    @if (totalPages > 1) {
+        <tui-pagination
+            class="tui-space_top-4"
+            [index]="index"
+            [length]="totalPages"
+            (indexChange)="onPageChanged($event)"
+        />
+    }
+} @else {
+    <div class="empty-block">
+        <span class="tui-text_h4">Пока ничего нет</span>
+    </div>
 }

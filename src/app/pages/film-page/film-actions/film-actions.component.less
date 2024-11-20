@@ -1,0 +1,29 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+:host {
+    display: block;
+}
+
+.rating-wrapper {
+    display: flex;
+    align-items: center;
+
+    @media @tui-mobile {
+        flex-direction: column;
+    }
+}
+
+.rating {
+    fill: currentColor;
+    font-size: 1rem;
+    inline-size: 25rem;
+
+    @media @tui-mobile {
+        font-size: 0.85rem;
+        inline-size: 20rem;
+    }
+}
+
+.icon-button {
+    border-radius: 40px;
+}

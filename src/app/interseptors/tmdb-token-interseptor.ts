@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { apiKey } from '../../../environment';
 
 const TMDB_HOST = 'https://api.themoviedb.org';
@@ -13,7 +14,7 @@ const TMDB_HOST = 'https://api.themoviedb.org';
 export class TmdbTokenInterseptor implements HttpInterceptor {
     intercept(
         request: HttpRequest<unknown>,
-        next: HttpHandler
+        next: HttpHandler,
     ): Observable<HttpEvent<unknown>> {
         if (request.url.startsWith(TMDB_HOST)) {
             const modifiedRequest = request.clone({
