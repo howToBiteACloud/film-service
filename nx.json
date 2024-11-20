@@ -14,7 +14,7 @@
         ],
         "sharedGlobals": ["{workspaceRoot}/.gitlab-ci.yml"]
     },
-    "nxCloudId": "671798fe4c97206ef2e61333",
+    "nxCloudId": "673e02d1195d3e7cb62f7c0a",
     "targetDefaults": {
         "@angular-devkit/build-angular:application": {
             "cache": true,
@@ -37,15 +37,8 @@
                 "^production",
                 "{workspaceRoot}/jest.preset.js"
             ],
-            "options": {
-                "passWithNoTests": true
-            },
-            "configurations": {
-                "ci": {
-                    "ci": true,
-                    "codeCoverage": true
-                }
-            }
+            "options": { "passWithNoTests": true },
+            "configurations": { "ci": { "ci": true, "codeCoverage": true } }
         }
     },
     "generators": {
