@@ -25,9 +25,9 @@ export class FilmSearchService {
     private readonly tmdbApiService = inject(TmdbApiService);
     private readonly destroyRef = inject(DestroyRef);
 
-    private readonly state$ = new BehaviorSubject<RequestState<FilmsResponse>>(
-        noneRequest(),
-    );
+    private readonly state$ = new BehaviorSubject<
+        RequestState<FilmsResponse | null>
+    >(noneRequest());
 
     readonly filmsResponse$ = this.state$.pipe(map((state) => state.value));
     readonly films$ = this.filmsResponse$.pipe(

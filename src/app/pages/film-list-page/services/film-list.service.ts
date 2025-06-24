@@ -26,9 +26,9 @@ export class FilmListService implements OnDestroy {
     private readonly currentPage$ = new BehaviorSubject<number>(1);
     private readonly currentFilters$ = new BehaviorSubject<FilmListFilters>({});
 
-    private readonly state$ = new BehaviorSubject<RequestState<FilmsResponse>>(
-        noneRequest(),
-    );
+    private readonly state$ = new BehaviorSubject<
+        RequestState<FilmsResponse | null>
+    >(noneRequest());
 
     readonly films$ = this.state$.pipe(
         map((state) => state.value?.results ?? []),

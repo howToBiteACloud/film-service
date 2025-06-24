@@ -21,9 +21,9 @@ export class WatchListFilmsService {
     private readonly authorizationService = inject(AuthorizationService);
 
     private readonly currentPage$ = new BehaviorSubject<number>(1);
-    private readonly state$ = new BehaviorSubject<RequestState<FilmsResponse>>(
-        loadingRequest(),
-    );
+    private readonly state$ = new BehaviorSubject<
+        RequestState<FilmsResponse | null>
+    >(loadingRequest());
 
     readonly watchList$ = this.state$.pipe(
         map((state) => state.value?.results ?? []),

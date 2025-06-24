@@ -3,9 +3,11 @@ import {
     ChangeDetectionStrategy,
     Component,
     inject,
+    OnDestroy,
     OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { TuiMapperPipe, TuiRepeatTimesPipe } from '@taiga-ui/cdk';
 import { TuiBreakpointMediaKey, TuiBreakpointService } from '@taiga-ui/core';
 import { TuiSkeleton } from '@taiga-ui/kit';
@@ -21,8 +23,9 @@ import { AuthorizationService } from '../../shared/services/authorization.servic
 import { FilmActionsComponent } from './film-actions/film-actions.component';
 import { FilmActorsComponent } from './film-actors/film-actors.component';
 import { FilmInfoComponent } from './film-info/film-info.component';
-import { FilmService } from './services/film.service';
 import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
+import { filmActions } from './store/film.actions';
+import { selectFilm } from './store/film.selectors';
 
 @Component({
     selector: 'app-film-page',
@@ -43,17 +46,16 @@ import { FilmTrailerComponent } from './film-trailer/film-trailer.component';
     templateUrl: './film-page.component.html',
     styleUrl: './film-page.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [FilmService],
 })
-export class FilmPageComponent implements OnInit {
-    private readonly filmService = inject(FilmService);
+export class FilmPageComponent implements OnInit, OnDestroy {
     private readonly authorizationService = inject(AuthorizationService);
     private readonly activatedRoute = inject(ActivatedRoute);
     private readonly breakpoint$ = inject(TuiBreakpointService);
+    private readonly store = inject(Store);
 
     readonly visibleItemsCount$ = this.breakpoint$.pipe(
         map((media: TuiBreakpointMediaKey | null) =>
-            media === 'mobile' ? 3 : 5,
+            media === 'mobile' ? 3.3 : 5,
         ),
     );
     readonly account$ = this.authorizationService.account$;
@@ -62,17 +64,15 @@ export class FilmPageComponent implements OnInit {
         map((paramMap) => paramMap.get('filmId')),
     );
 
-    readonly film$ = this.filmService.film$;
-    readonly isLoading$ = this.filmService.isLoading$;
+    readonly film$ = this.store.select(selectFilm);
 
     ngOnInit() {
         this.filmId$.subscribe((filmId) => {
             if (filmId) {
-                this.filmService.loadFilm(filmId);
+                this.store.dispatch(filmActions.load({ filmId }));
             }
         });
     }
-
     getTrailer(film: FilmData) {
         return film.videos.results.find((video) => video.type === 'Trailer');
     }
@@ -81,19 +81,7 @@ export class FilmPageComponent implements OnInit {
         return film.recommendations.results;
     }
 
-    toggleFavorite(accountId: number, filmId: number, favorite: boolean) {
-        this.filmService.changeFavoriteFilm(accountId, filmId, favorite);
-    }
-
-    toggleWatchlist(accountId: number, filmId: number, watchList: boolean) {
-        this.filmService.changeWatchlistFilm(accountId, filmId, watchList);
-    }
-
-    changeFilmRate(rate: number, filmId: number) {
-        this.filmService.changeFilmRate(rate, filmId);
-    }
-
-    deleteFilmRate(filmId: number) {
-        this.filmService.deleteFilmRate(filmId);
+    ngOnDestroy() {
+        this.store.dispatch(filmActions.closed());
     }
 }
