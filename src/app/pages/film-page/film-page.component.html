@@ -1,9 +1,8 @@
 @let film = film$ | async;
-@let isLoading = isLoading$ | async;
 @let visibleItemsCount = (visibleItemsCount$ | async)!;
 @let account = account$ | async;
 
-@if (!isLoading && film) {
+@if (film) {
     <div class="film-row">
         <div>
             <app-poster

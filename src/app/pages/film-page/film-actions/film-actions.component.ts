@@ -6,11 +6,12 @@ import {
     Input,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { TuiButton, TuiHint, TuiHintDirective, TuiIcon } from '@taiga-ui/core';
 import { TuiRating } from '@taiga-ui/kit';
 
 import { AccountData, FilmData } from '../../../models';
-import { FilmService } from '../services/film.service';
+import { filmActions } from '../store/film.actions';
 
 @Component({
     selector: 'app-film-actions',
@@ -29,24 +30,28 @@ import { FilmService } from '../services/film.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilmActionsComponent {
-    private readonly filmService = inject(FilmService);
+    private readonly store = inject(Store);
 
     @Input({ required: true }) film!: FilmData;
     @Input({ required: true }) account!: AccountData;
 
     toggleFavorite(accountId: number, filmId: number, favorite: boolean) {
-        this.filmService.changeFavoriteFilm(accountId, filmId, favorite);
+        this.store.dispatch(
+            filmActions.changeFavorite({ accountId, filmId, favorite }),
+        );
     }
 
-    toggleWatchlist(accountId: number, filmId: number, watchList: boolean) {
-        this.filmService.changeWatchlistFilm(accountId, filmId, watchList);
+    toggleWatchlist(accountId: number, filmId: number, watchlist: boolean) {
+        this.store.dispatch(
+            filmActions.changeWatchlist({ accountId, filmId, watchlist }),
+        );
     }
 
     changeFilmRate(rate: number, filmId: number) {
-        this.filmService.changeFilmRate(rate, filmId);
+        this.store.dispatch(filmActions.changeRate({ rate, filmId }));
     }
 
     deleteFilmRate(filmId: number) {
-        this.filmService.deleteFilmRate(filmId);
+        this.store.dispatch(filmActions.deleteRate({ filmId }));
     }
 }
