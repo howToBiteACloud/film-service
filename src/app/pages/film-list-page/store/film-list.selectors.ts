@@ -51,7 +51,7 @@ const selectGenres = createSelector(
     (state: FilmListState) => state.genres,
 );
 
-export const selectFilmList = {
+export const filmListSelectors = {
     filmList: selectFilms,
     isLoading: selectFilmListIsLoading,
     totalPages: selectFilmListTotalPages,

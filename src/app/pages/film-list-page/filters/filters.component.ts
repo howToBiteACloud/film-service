@@ -24,10 +24,10 @@ import { SortingComponent } from './sorting/sorting.component';
 export class FiltersComponent implements OnInit {
     private readonly store = inject(Store);
 
-    readonly genresControl = new FormControl<Genre[]>([]);
-    readonly datesControl = new FormControl<number | null>(null);
-    readonly sortControl = new FormControl<string>('popularity.desc');
-    readonly filtersForm: FormGroup = new FormGroup({
+    protected readonly genresControl = new FormControl<Genre[]>([]);
+    protected readonly datesControl = new FormControl<number | null>(null);
+    protected readonly sortControl = new FormControl<string>('popularity.desc');
+    protected readonly filtersForm: FormGroup = new FormGroup({
         genres: this.genresControl,
         dates: this.datesControl,
         sorting: this.sortControl,

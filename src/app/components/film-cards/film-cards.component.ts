@@ -33,6 +33,7 @@ import { FilmCardComponent } from '../film-card/film-card.component';
 })
 export class FilmCardsComponent {
     private readonly store = inject(Store);
+
     @Input({ required: true }) films: FilmData[] = [];
     @Input({ required: true }) totalPages = 0;
     @Input() isLoading = false;

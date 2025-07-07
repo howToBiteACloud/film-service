@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 import { FilmCardsComponent } from '../../components/film-cards/film-cards.component';
 import { FiltersComponent } from './filters/filters.component';
 import { filmListActions } from './store/film-list.actions';
-import { selectFilmList } from './store/film-list.selectors';
+import { filmListSelectors } from './store/film-list.selectors';
 
 @Component({
     selector: 'app-film-list-page',
@@ -24,9 +24,13 @@ import { selectFilmList } from './store/film-list.selectors';
 export class FilmListPageComponent implements OnInit, OnDestroy {
     private readonly store = inject(Store);
 
-    readonly films$ = this.store.select(selectFilmList.filmList);
-    readonly totalPages$ = this.store.select(selectFilmList.totalPages);
-    readonly isLoading$ = this.store.select(selectFilmList.isLoading);
+    protected readonly films$ = this.store.select(filmListSelectors.filmList);
+    protected readonly totalPages$ = this.store.select(
+        filmListSelectors.totalPages,
+    );
+    protected readonly isLoading$ = this.store.select(
+        filmListSelectors.isLoading,
+    );
 
     ngOnInit() {
         this.store.dispatch(filmListActions.load());

@@ -13,7 +13,7 @@ import {
 import { TmdbApiService } from '../../../apis/tmdb-api.service';
 import { makeFilmParams } from '../helpers';
 import { filmListActions } from './film-list.actions';
-import { selectFilmList } from './film-list.selectors';
+import { filmListSelectors } from './film-list.selectors';
 
 @Injectable()
 export class FilmListEffects {
@@ -28,8 +28,8 @@ export class FilmListEffects {
         return this.actions$.pipe(
             ofType(filmListActions.load),
             withLatestFrom(
-                this.store.select(selectFilmList.currentPage),
-                this.store.select(selectFilmList.filters),
+                this.store.select(filmListSelectors.currentPage),
+                this.store.select(filmListSelectors.filters),
             ),
             map(([_, currentPage, filters]) => {
                 return makeFilmParams(currentPage, filters);
@@ -56,9 +56,6 @@ export class FilmListEffects {
                     map((genres) =>
                         filmListActions.loadGenresSuccess({ genres }),
                     ),
-                    // catchError((error) =>
-                    //     of(filmListActions.loadFail({ error })),
-                    // ),
                     takeUntil(this.destroy$),
                 );
             }),

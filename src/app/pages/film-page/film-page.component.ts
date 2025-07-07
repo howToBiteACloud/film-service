@@ -53,18 +53,18 @@ export class FilmPageComponent implements OnInit, OnDestroy {
     private readonly breakpoint$ = inject(TuiBreakpointService);
     private readonly store = inject(Store);
 
-    readonly visibleItemsCount$ = this.breakpoint$.pipe(
+    protected readonly visibleItemsCount$ = this.breakpoint$.pipe(
         map((media: TuiBreakpointMediaKey | null) =>
             media === 'mobile' ? 3.3 : 5,
         ),
     );
-    readonly account$ = this.authorizationService.account$;
+    protected readonly account$ = this.authorizationService.account$;
 
-    readonly filmId$ = this.activatedRoute.paramMap.pipe(
+    protected readonly filmId$ = this.activatedRoute.paramMap.pipe(
         map((paramMap) => paramMap.get('filmId')),
     );
 
-    readonly film$ = this.store.select(selectFilm);
+    protected readonly film$ = this.store.select(selectFilm);
 
     ngOnInit() {
         this.filmId$.subscribe((filmId) => {
@@ -73,6 +73,7 @@ export class FilmPageComponent implements OnInit, OnDestroy {
             }
         });
     }
+
     getTrailer(film: FilmData) {
         return film.videos.results.find((video) => video.type === 'Trailer');
     }

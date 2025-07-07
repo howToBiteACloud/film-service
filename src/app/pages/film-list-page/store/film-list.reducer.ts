@@ -23,6 +23,7 @@ export const filmListReducer = createReducer(
         films: [],
         status: RequestStatus.Loading,
     })),
+    on(filmListActions.closed, () => initialState),
     on(filmListActions.loadSuccess, (state, { films }) => {
         return {
             ...state,
@@ -47,7 +48,6 @@ export const filmListReducer = createReducer(
         ...state,
         genres,
     })),
-    on(filmListActions.closed, () => initialState),
 );
 
 export const filmListFeature = createFeature({

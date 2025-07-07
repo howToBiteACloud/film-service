@@ -16,7 +16,7 @@ import {
 } from '@taiga-ui/legacy';
 
 import { Genre } from '../../../../models';
-import { selectFilmList } from '../../store/film-list.selectors';
+import { filmListSelectors } from '../../store/film-list.selectors';
 
 @Component({
     selector: 'app-genres-filter',
@@ -37,8 +37,7 @@ import { selectFilmList } from '../../store/film-list.selectors';
 export class GenresFilterComponent {
     private readonly store = inject(Store);
 
-    protected readonly genres$ = this.store.select(selectFilmList.genres);
-
+    protected readonly genres$ = this.store.select(filmListSelectors.genres);
     protected readonly stringify = (item: Genre): string => item.name;
 
     protected search: string | null = '';

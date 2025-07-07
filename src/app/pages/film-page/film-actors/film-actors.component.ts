@@ -15,7 +15,7 @@ import { pluralize } from '../../../shared/utils';
 export class FilmActorsComponent {
     @Input({ required: true }) actors!: Cast[];
 
-    readonly pluralize = pluralize;
+    protected readonly pluralize = pluralize;
 
     getTop10(actors: Cast[]): Cast[] {
         return actors.slice(0, 10);

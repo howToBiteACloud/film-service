@@ -18,16 +18,16 @@ import { getTimeFromMins } from '../../../shared/utils';
 export class FilmInfoComponent {
     @Input({ required: true }) film!: FilmData;
 
-    readonly getCountries = (countries: ProductionCountry[]) =>
+    protected readonly getCountries = (countries: ProductionCountry[]) =>
         countries.map((country) => country.name).join(', ');
 
-    readonly getFixedAverageVote = (film: FilmData) =>
+    protected readonly getFixedAverageVote = (film: FilmData) =>
         film.vote_average.toFixed(1);
 
-    readonly getFixedRuntime = (film: FilmData) =>
+    protected readonly getFixedRuntime = (film: FilmData) =>
         getTimeFromMins(film.runtime);
 
-    getDirectorName(film: FilmData): string {
+    protected getDirectorName(film: FilmData): string {
         const director = film.credits.crew.find(
             (person) => person.job === 'Director',
         );

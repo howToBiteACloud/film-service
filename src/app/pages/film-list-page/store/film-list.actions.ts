@@ -2,10 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { FilmListFilters, FilmsResponse, Genre } from '../../../models';
 
-const loadFilms = createAction(
-    '[Film List page] Load Film List',
-    // props<{ params:  }>(),
-);
+const loadFilms = createAction('[Film List page] Load Film List');
 
 const filmsLoadSuccess = createAction(
     '[Film List page] Film List Loaded Success',
@@ -35,11 +32,6 @@ const loadGenresSuccess = createAction(
 );
 
 const loadGenres = createAction('[Film List Page] Load Genres');
-
-// const changeDate = createAction(
-//     '[Film List Page] Change Date',
-//     props<{ date: number }>(),
-// );
 
 export const filmListActions = {
     closed,
