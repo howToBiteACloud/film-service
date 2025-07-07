@@ -1,6 +1,6 @@
 export enum RequestStatus {
-    None,
-    Loading,
-    Success,
-    Fail,
+    None = 'None',
+    Loading = 'Loading',
+    Success = 'Success',
+    Fail = 'Fail',
 }

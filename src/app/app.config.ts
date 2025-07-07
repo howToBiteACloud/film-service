@@ -18,6 +18,8 @@ import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 
 import { appRoutes } from './app.routes';
 import { TmdbTokenInterseptor } from './interseptors/tmdb-token-interseptor';
+import { FilmListEffects } from './pages/film-list-page/store/film-list.effect';
+import { filmListFeature } from './pages/film-list-page/store/film-list.reducer';
 import { FilmEffects } from './pages/film-page/store/film.effects';
 import { filmFeature } from './pages/film-page/store/film.reducer';
 
@@ -36,7 +38,8 @@ export const appConfig: ApplicationConfig = {
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         provideStore(),
         provideState(filmFeature),
-        provideEffects(FilmEffects),
+        provideState(filmListFeature),
+        provideEffects(FilmEffects, FilmListEffects),
         provideStoreDevtools({
             maxAge: 25, // Retains last 25 states
             logOnly: !isDevMode(), // Restrict extension to log-only mode

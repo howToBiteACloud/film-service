@@ -3,9 +3,11 @@ import {
     ChangeDetectionStrategy,
     Component,
     EventEmitter,
+    inject,
     Input,
     Output,
 } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { TuiRepeatTimesPipe } from '@taiga-ui/cdk';
 import { TuiPagination } from '@taiga-ui/kit';
 import { TuiSkeleton } from '@taiga-ui/kit';
@@ -30,6 +32,7 @@ import { FilmCardComponent } from '../film-card/film-card.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilmCardsComponent {
+    private readonly store = inject(Store);
     @Input({ required: true }) films: FilmData[] = [];
     @Input({ required: true }) totalPages = 0;
     @Input() isLoading = false;
