@@ -14,7 +14,7 @@ export class FilmEffects {
     private readonly authorizationService = inject(AuthorizationService);
     private readonly destroy$ = this.actions$.pipe(ofType(filmActions.closed));
 
-    loadFilms$ = createEffect(() => {
+    private readonly loadFilms$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(filmActions.load),
             switchMap(({ filmId }) => {
@@ -38,7 +38,7 @@ export class FilmEffects {
         );
     });
 
-    changeFilmRate$ = createEffect(() => {
+    private readonly changeFilmRate$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(filmActions.changeRate),
             switchMap(({ rate, filmId }) => {
@@ -53,7 +53,7 @@ export class FilmEffects {
         );
     });
 
-    deleteFilmRate$ = createEffect(() => {
+    private readonly deleteFilmRate$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(filmActions.deleteRate),
             switchMap(({ filmId }) => {
@@ -67,7 +67,7 @@ export class FilmEffects {
         );
     });
 
-    changeFavoriteFilm$ = createEffect(() => {
+    private readonly changeFavoriteFilm$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(filmActions.changeFavorite),
             switchMap(({ accountId, filmId, favorite }) => {
@@ -89,7 +89,7 @@ export class FilmEffects {
         );
     });
 
-    changeWatchlistFilm$ = createEffect(() => {
+    private readonly changeWatchlistFilm$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(filmActions.changeWatchlist),
             switchMap(({ accountId, filmId, watchlist }) => {

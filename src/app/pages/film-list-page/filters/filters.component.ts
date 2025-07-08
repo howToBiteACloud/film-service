@@ -5,9 +5,10 @@ import {
     OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 
 import { Genre } from '../../../models';
-import { FilmListService } from '../services/film-list.service';
+import { filmListActions } from '../store/film-list.actions';
 import { DateFilterComponent } from './date-filter/date-filter.component';
 import { GenresFilterComponent } from './genres-filter/genres-filter.component';
 import { SortingComponent } from './sorting/sorting.component';
@@ -21,12 +22,12 @@ import { SortingComponent } from './sorting/sorting.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FiltersComponent implements OnInit {
-    private readonly filmListService = inject(FilmListService);
+    private readonly store = inject(Store);
 
-    readonly genresControl = new FormControl<Genre[]>([]);
-    readonly datesControl = new FormControl<number | null>(null);
-    readonly sortControl = new FormControl<string>('popularity.desc');
-    readonly filtersForm: FormGroup = new FormGroup({
+    protected readonly genresControl = new FormControl<Genre[]>([]);
+    protected readonly datesControl = new FormControl<number | null>(null);
+    protected readonly sortControl = new FormControl<string>('popularity.desc');
+    protected readonly filtersForm: FormGroup = new FormGroup({
         genres: this.genresControl,
         dates: this.datesControl,
         sorting: this.sortControl,
@@ -34,7 +35,10 @@ export class FiltersComponent implements OnInit {
 
     ngOnInit() {
         this.filtersForm.valueChanges.subscribe((value) => {
-            this.filmListService.controlsChange(value);
+            this.store.dispatch(
+                filmListActions.updateFilters({ filters: value }),
+            );
+            this.store.dispatch(filmListActions.load());
         });
     }
 }

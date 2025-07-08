@@ -38,17 +38,23 @@ export class ProfilePageComponent implements OnInit {
     private readonly ratedFilmsService = inject(RatedFilmsService);
     private readonly router = inject(Router);
 
-    readonly account$ = this.authorizationService.account$;
-    readonly accountLoading$ = this.authorizationService.accountLoading$;
-    readonly favoriteFilms$ = this.favoriteFilmsService.favoriteFilms$;
-    readonly watchList$ = this.watchListFilmsService.watchList$;
-    readonly watchListTotalPages$ = this.watchListFilmsService.totalPages$;
-    readonly favoriteTotalPages$ = this.favoriteFilmsService.totalPages$;
-    readonly isLoadingFavorites$ = this.favoriteFilmsService.isLoading$;
-    readonly isLoadingWathList$ = this.watchListFilmsService.isLoading$;
-    readonly ratedFilms$ = this.ratedFilmsService.ratedFilms$;
-    readonly ratedTotalPages$ = this.ratedFilmsService.totalPages$;
-    readonly isLoadingRated$ = this.ratedFilmsService.isLoading$;
+    protected readonly account$ = this.authorizationService.account$;
+    protected readonly accountLoading$ =
+        this.authorizationService.accountLoading$;
+    protected readonly favoriteFilms$ =
+        this.favoriteFilmsService.favoriteFilms$;
+    protected readonly watchList$ = this.watchListFilmsService.watchList$;
+    protected readonly watchListTotalPages$ =
+        this.watchListFilmsService.totalPages$;
+    protected readonly favoriteTotalPages$ =
+        this.favoriteFilmsService.totalPages$;
+    protected readonly isLoadingFavorites$ =
+        this.favoriteFilmsService.isLoading$;
+    protected readonly isLoadingWathList$ =
+        this.watchListFilmsService.isLoading$;
+    protected readonly ratedFilms$ = this.ratedFilmsService.ratedFilms$;
+    protected readonly ratedTotalPages$ = this.ratedFilmsService.totalPages$;
+    protected readonly isLoadingRated$ = this.ratedFilmsService.isLoading$;
 
     ngOnInit() {
         this.favoriteFilmsService.initialize();
@@ -64,15 +70,15 @@ export class ProfilePageComponent implements OnInit {
             .subscribe(() => this.router.navigate(['/']));
     }
 
-    onWatchlistPageChanged(pageNumber: number) {
+    protected onWatchlistPageChanged(pageNumber: number) {
         this.watchListFilmsService.pageChange(pageNumber);
     }
 
-    onFavoritePageChanged(pageNumber: number) {
+    protected onFavoritePageChanged(pageNumber: number) {
         this.favoriteFilmsService.pageChange(pageNumber);
     }
 
-    onRatedPageChanged(pageNumber: number) {
+    protected onRatedPageChanged(pageNumber: number) {
         this.ratedFilmsService.pageChange(pageNumber);
     }
 }

@@ -34,8 +34,9 @@ export class HeaderComponent {
     private readonly authorizationService = inject(AuthorizationService);
     private readonly destroyRef = inject(DestroyRef);
 
-    readonly account$ = this.authorizationService.account$;
-    readonly accountLoading$ = this.authorizationService.accountLoading$;
+    protected readonly account$ = this.authorizationService.account$;
+    protected readonly accountLoading$ =
+        this.authorizationService.accountLoading$;
 
     openAuthWindow() {
         this.authorizationService

@@ -23,7 +23,7 @@ enum Direction {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarouselComponent {
-    readonly direction = Direction;
+    protected readonly direction = Direction;
 
     @ViewChild('carousel', { static: false }) carousel!: ElementRef;
 

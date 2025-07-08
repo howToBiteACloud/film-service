@@ -6,6 +6,7 @@ import {
     Input,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { tuiPure } from '@taiga-ui/cdk';
 import { TuiDataList } from '@taiga-ui/core';
 import { TuiDataListWrapper, TuiStringifyContentPipe } from '@taiga-ui/kit';
@@ -15,7 +16,7 @@ import {
 } from '@taiga-ui/legacy';
 
 import { Genre } from '../../../../models';
-import { FilmListService } from '../../services/film-list.service';
+import { filmListSelectors } from '../../store/film-list.selectors';
 
 @Component({
     selector: 'app-genres-filter',
@@ -34,9 +35,9 @@ import { FilmListService } from '../../services/film-list.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenresFilterComponent {
-    private readonly filmListService = inject(FilmListService);
-    protected readonly genres$ = this.filmListService.genres$;
+    private readonly store = inject(Store);
 
+    protected readonly genres$ = this.store.select(filmListSelectors.genres);
     protected readonly stringify = (item: Genre): string => item.name;
 
     protected search: string | null = '';

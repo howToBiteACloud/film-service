@@ -10,8 +10,6 @@ import {
 import { filmActions } from './film.actions';
 import { FilmState } from './film.selectors';
 
-export const FILM_FEATURE_KEY = 'film';
-
 export const initialState: FilmState = {
     film: noneRequest(),
 };
