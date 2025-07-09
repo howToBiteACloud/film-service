@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 
 import { FilmCardsComponent } from '../../components/film-cards/film-cards.component';
 import { FiltersComponent } from './filters/filters.component';
+import { getQueryFilters } from './helpers/get-query-filters';
 import { filmListActions } from './store/film-list.actions';
 import { filmListSelectors } from './store/film-list.selectors';
 
@@ -32,7 +33,12 @@ export class FilmListPageComponent implements OnInit, OnDestroy {
         filmListSelectors.isLoading,
     );
 
+    private readonly queryFilters = getQueryFilters();
+
     ngOnInit() {
+        this.store.dispatch(
+            filmListActions.updateFilters({ filters: this.queryFilters }),
+        );
         this.store.dispatch(filmListActions.load());
         this.store.dispatch(filmListActions.loadGenres());
     }

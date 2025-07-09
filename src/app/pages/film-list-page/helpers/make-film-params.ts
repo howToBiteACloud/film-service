@@ -1,14 +1,15 @@
-import { DiscoverMovieParams, FilmListFilters, Genre } from '../../../models';
+import { DiscoverMovieParams, FilmListFilters } from '../../../models';
 
 export function makeFilmParams(
     page: number,
     filters: FilmListFilters,
 ): DiscoverMovieParams {
-    const with_genres = filters.genres
-        ? filters.genres.map((genre: Genre) => genre.id).join(',')
-        : null;
+    console.log(filters);
+    const with_genres = filters.genres ? filters.genres.join(',') : null;
     const primary_release_year = filters.dates;
     const sort_by = filters.sorting;
+
+    console.log(with_genres);
 
     const params: DiscoverMovieParams = {
         page,

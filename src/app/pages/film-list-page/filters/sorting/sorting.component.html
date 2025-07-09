@@ -3,7 +3,7 @@
     <input
         tuiRadio
         type="radio"
-        value="popularity.desc"
+        [value]="sortingFilmList.popularity"
         [formControl]="control"
     />
     По популярности
@@ -12,7 +12,7 @@
     <input
         tuiRadio
         type="radio"
-        value="vote_count.desc"
+        [value]="sortingFilmList.votes"
         [formControl]="control"
     />
     По количеству оценок
@@ -21,7 +21,7 @@
     <input
         tuiRadio
         type="radio"
-        value="primary_release_date.desc"
+        [value]="sortingFilmList.release"
         [formControl]="control"
     />
     Сначала новые
