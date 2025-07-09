@@ -15,4 +15,5 @@ export * from './recommendations-response.type';
 export * from './request-state.type';
 export * from './request-status.enum';
 export * from './request-token.type';
+export * from './sorting-film-list.enum';
 export * from './spoken-language.type';

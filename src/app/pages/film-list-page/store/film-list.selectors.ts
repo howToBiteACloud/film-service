@@ -15,7 +15,6 @@ export interface FilmListState {
     currentPage: number;
     filters: FilmListFilters;
     genres: Array<Genre>;
-    date: number | null;
 }
 
 const selectFilmListState =

@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 
-import { RequestStatus } from '../../../models';
+import { RequestStatus, SortingFilmList } from '../../../models';
 import { filmListActions } from './film-list.actions';
 import { FilmListState } from './film-list.selectors';
 
@@ -11,9 +11,10 @@ export const initialState: FilmListState = {
     totalPages: 0,
     status: RequestStatus.None,
     currentPage: 1,
-    filters: {},
+    filters: {
+        sorting: SortingFilmList.popularity,
+    },
     genres: [],
-    date: null,
 };
 
 export const filmListReducer = createReducer(

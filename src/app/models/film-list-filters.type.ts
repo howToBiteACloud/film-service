@@ -1,7 +1,7 @@
-import { Genre } from './genre.type';
+import { SortingFilmList } from './sorting-film-list.enum';
 
 export type FilmListFilters = Readonly<{
-    genres?: Genre[];
+    genres?: number[];
     dates?: number;
-    sorting?: string;
+    sorting?: SortingFilmList;
 }>;

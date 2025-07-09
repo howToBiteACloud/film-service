@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TuiLabel } from '@taiga-ui/core';
 import { TuiRadio } from '@taiga-ui/kit';
+import { SortingFilmList } from 'src/app/models';
 
 @Component({
     selector: 'app-sorting',
@@ -13,5 +14,7 @@ import { TuiRadio } from '@taiga-ui/kit';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SortingComponent {
+    public readonly sortingFilmList = SortingFilmList;
+
     @Input() control!: FormControl;
 }
