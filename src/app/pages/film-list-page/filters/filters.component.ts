@@ -5,13 +5,12 @@ import {
     OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, map } from 'rxjs';
 
 import { FilmListFilters, Genre, SortingFilmList } from '../../../models';
 import { getQueryFilters } from '../helpers/get-query-filters';
-import { filmListActions } from '../store/film-list.actions';
 import { filmListSelectors } from '../store/film-list.selectors';
 import { DateFilterComponent } from './date-filter/date-filter.component';
 import { GenresFilterComponent } from './genres-filter/genres-filter.component';
@@ -29,7 +28,9 @@ export class FiltersComponent implements OnInit {
     private readonly store = inject(Store);
     private readonly router = inject(Router);
     private readonly activatedRoute = inject(ActivatedRoute);
-    private readonly queryFilters = getQueryFilters();
+    // private readonly queryFilters = getQueryFilters(
+    //     this.activatedRoute.snapshot.params,
+    // );
 
     protected readonly genresControl = new FormControl<Genre[]>([]);
     protected readonly datesControl = new FormControl<number | null>(null);
@@ -43,31 +44,37 @@ export class FiltersComponent implements OnInit {
     });
 
     ngOnInit() {
-        this.filtersForm.patchValue(
-            {
-                dates: this.queryFilters.dates,
-                sorting: this.queryFilters.sorting,
-            },
-            {
-                emitEvent: false,
-            },
-        );
+        this.activatedRoute.queryParams.subscribe((params: Params) => {
+            const queryFilters = getQueryFilters(params);
+            this.filtersForm.patchValue(
+                {
+                    dates: queryFilters.dates,
+                    sorting: queryFilters.sorting,
+                },
+                {
+                    emitEvent: false,
+                },
+            );
 
-        this.store
-            .select(filmListSelectors.genres)
-            .pipe(
-                filter((genres) => genres.length > 0),
-                map((genres) => {
-                    const selectedGenres = this.queryFilters.genres ?? [];
+            this.store
+                .select(filmListSelectors.genres)
+                .pipe(
+                    filter((genres) => genres.length > 0),
+                    map((genres) => {
+                        const selectedGenres = queryFilters.genres ?? [];
 
-                    return selectedGenres.map((id) =>
-                        genres.find((genre) => genre.id === id),
+                        return selectedGenres.map((id) =>
+                            genres.find((genre) => genre.id === id),
+                        );
+                    }),
+                )
+                .subscribe((genres) => {
+                    this.filtersForm.patchValue(
+                        { genres },
+                        { emitEvent: false },
                     );
-                }),
-            )
-            .subscribe((genres) => {
-                this.filtersForm.patchValue({ genres }, { emitEvent: false });
-            });
+                });
+        });
 
         this.filtersForm.valueChanges.subscribe((value) => {
             const actualFilters = {
@@ -79,12 +86,6 @@ export class FiltersComponent implements OnInit {
             };
 
             this.updateQueryParams(actualFilters);
-            this.store.dispatch(
-                filmListActions.updateFilters({
-                    filters: actualFilters,
-                }),
-            );
-            this.store.dispatch(filmListActions.load());
         });
     }
 

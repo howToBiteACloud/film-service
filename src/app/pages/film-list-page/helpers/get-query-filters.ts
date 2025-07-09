@@ -1,10 +1,8 @@
-import { inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Params } from '@angular/router';
 
 import { FilmListFilters, SortingFilmList } from '../../../models';
 
-export function getQueryFilters(): FilmListFilters {
-    const queryParams = inject(ActivatedRoute).snapshot.queryParams;
+export function getQueryFilters(queryParams: Params): FilmListFilters {
     const genresFromQuery = queryParams['genres'];
     const genres: string[] = genresFromQuery
         ? Array.isArray(genresFromQuery)

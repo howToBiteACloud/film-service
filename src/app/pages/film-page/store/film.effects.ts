@@ -93,7 +93,6 @@ export class FilmEffects {
         return this.actions$.pipe(
             ofType(filmActions.changeWatchlist),
             switchMap(({ accountId, filmId, watchlist }) => {
-                console.log(accountId);
                 return this.tmdbApiService
                     .changeWatchListFilm(
                         accountId,

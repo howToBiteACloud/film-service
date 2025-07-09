@@ -6,6 +6,7 @@ import {
     OnDestroy,
     OnInit,
 } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { FilmCardsComponent } from '../../components/film-cards/film-cards.component';
@@ -24,6 +25,8 @@ import { filmListSelectors } from './store/film-list.selectors';
 })
 export class FilmListPageComponent implements OnInit, OnDestroy {
     private readonly store = inject(Store);
+    private readonly router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
 
     protected readonly films$ = this.store.select(filmListSelectors.filmList);
     protected readonly totalPages$ = this.store.select(
@@ -33,13 +36,16 @@ export class FilmListPageComponent implements OnInit, OnDestroy {
         filmListSelectors.isLoading,
     );
 
-    private readonly queryFilters = getQueryFilters();
-
     ngOnInit() {
-        this.store.dispatch(
-            filmListActions.updateFilters({ filters: this.queryFilters }),
-        );
-        this.store.dispatch(filmListActions.load());
+        this.activatedRoute.queryParams.subscribe((params: Params) => {
+            this.store.dispatch(
+                filmListActions.updateFilters({
+                    filters: getQueryFilters(params),
+                }),
+            );
+            this.store.dispatch(filmListActions.load());
+        });
+
         this.store.dispatch(filmListActions.loadGenres());
     }
 
