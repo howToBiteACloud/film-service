@@ -32,7 +32,6 @@ export class FilmListEffects {
                 this.store.select(filmListSelectors.filters),
             ),
             map(([_, currentPage, filters]) => {
-                console.log(filters);
                 return makeFilmParams(currentPage, filters);
             }),
             switchMap((params) =>
